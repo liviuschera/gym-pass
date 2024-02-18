@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const H1 = styled.h1`
     font-size: 30px;
@@ -8,9 +9,12 @@ const H1 = styled.h1`
 
 function App() {
     return (
-        <div>
-            <H1>Gym Pass</H1>
-        </div>
+        <>
+            <GlobalStyles />
+            <div>
+                <H1>Gym Pass</H1>
+            </div>
+        </>
     );
 }
 

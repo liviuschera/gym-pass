@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 // temporary global styles
 const GlobalStyles = createGlobalStyle`
-
+/* TODO: add tailwind variable colors latter on  */
 
 *,
 *::before,
@@ -85,3 +85,5 @@ img {
 
 }
 `;
+
+export default GlobalStyles;
