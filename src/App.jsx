@@ -1,23 +1,26 @@
-import styled from "styled-components";
-import GlobalStyles from "./styles/GlobalStyles";
-import Heading from "./ui/Heading";
-
-const H1 = styled.h1`
-    font-size: 30px;
-    font-weight: 600;
-    color: turquoise;
-`;
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PageNotFound from "./pages/PageNotFound";
+import Account from "./pages/Account";
+import Bookings from "./pages/Bookings";
+import Classes from "./pages/Classes";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import Members from "./pages/Members";
 
 function App() {
     return (
-        <>
-            <GlobalStyles />
-            <div>
-                <Heading as="h1">Gym Pass</Heading>
-                <Heading as="h2">Gym Pass</Heading>
-                <Heading as="h3">Gym Pass</Heading>
-            </div>
-        </>
+        <BrowserRouter>
+            <h1>App</h1>
+            <Routes>
+                <Route path="/account" element={<Account />} />
+                <Route path="/bookings" element={<Bookings />} />
+                <Route path="/classes" element={<Classes />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/members" element={<Members />} />
+                <Route path="*" element={<PageNotFound />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
