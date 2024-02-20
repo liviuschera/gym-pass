@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const NavList = styled.ul`
@@ -6,7 +7,7 @@ const NavList = styled.ul`
     gap: 0.8rem;
 `;
 
-const Link = styled.a`
+const StyledNavLink = styled(NavLink)`
     &:link,
     &:visited {
         display: flex;
@@ -28,6 +29,7 @@ const Link = styled.a`
         color: var(--color-grey-800);
         background-color: var(--color-grey-50);
         border-radius: var(--border-radius-sm);
+        font-weight: 600;
     }
 
     & svg {
@@ -46,7 +48,27 @@ const Link = styled.a`
 `;
 
 function MainNav() {
-    return <nav>Nav</nav>;
+    return (
+        <nav>
+            <NavList>
+                <li>
+                    <StyledNavLink to="/dashboard">Home</StyledNavLink>
+                </li>
+                <li>
+                    <StyledNavLink to="/bookings">Bookings</StyledNavLink>
+                </li>
+                <li>
+                    <StyledNavLink to="/account">Account</StyledNavLink>
+                </li>
+                <li>
+                    <StyledNavLink to="/classes">Classes</StyledNavLink>
+                </li>
+                <li>
+                    <StyledNavLink to="/members">Members</StyledNavLink>
+                </li>
+            </NavList>
+        </nav>
+    );
 }
 
 export default MainNav;

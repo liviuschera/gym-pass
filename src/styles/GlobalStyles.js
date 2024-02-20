@@ -58,6 +58,7 @@ const GlobalStyles = createGlobalStyle`
   --image-grayscale: 0;
   --image-opacity: 100%;
 }
+
 *,
 *::before,
 *::after {
@@ -65,11 +66,12 @@ const GlobalStyles = createGlobalStyle`
   padding: 0;
   margin: 0;
 
-
+  /* Creating animations for dark mode */
+  transition: background-color 0.3s, border 0.3s;
 }
 
 html {
-  font-size: 10px;
+  font-size: 62.5%;
 }
 
 body {
@@ -112,6 +114,10 @@ select:focus {
   outline-offset: -1px;
 }
 
+/* Parent selector, finally 😃 */
+button:has(svg) {
+  line-height: 0;
+}
 
 a {
   color: inherit;
@@ -136,7 +142,8 @@ h6 {
 img {
   max-width: 100%;
 
-
+  /* For dark mode */
+  filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
 }
 `;
 
