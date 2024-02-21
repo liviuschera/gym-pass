@@ -76,9 +76,9 @@ function MainNav() {
                     </StyledNavLink>
                 </li>
                 <li>
-                    <StyledNavLink to="/classes">
+                    <StyledNavLink to="/activities">
                         <GrYoga />
-                        <span>Classes</span>
+                        <span>Activities</span>
                     </StyledNavLink>
                 </li>
                 <li>
