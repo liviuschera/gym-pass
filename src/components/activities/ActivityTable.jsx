@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { getActivities } from "../../services/getActivities";
+import { getActivities } from "../../services/APIactivities";
 import Spinner from "../../ui/Spinner";
 import ActivityRow from "./ActivityRow";
 

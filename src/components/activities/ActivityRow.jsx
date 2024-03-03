@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteActivity } from "../../services/APIactivities";
 
 const TableRow = styled.div`
     display: grid;
@@ -40,6 +42,7 @@ const Discount = styled.div`
 
 function ActivityRow({
     activity: {
+        id: activityId,
         image,
         name,
         regular_price,
@@ -49,6 +52,17 @@ function ActivityRow({
         max_capacity,
     },
 }) {
+    const queryClient = useQueryClient();
+
+    const { isLoading: isDeleting, mutate } = useMutation({
+        mutationFn: (id) => deleteActivity(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ["activities"],
+            });
+        },
+        onError: (error) => alert(error.message),
+    });
     return (
         <TableRow role="row">
             <Img src={image} alt={name} />
@@ -58,7 +72,9 @@ function ActivityRow({
             <p>{max_capacity}</p>
             <Price>{formatCurrency(regular_price)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>
-            <div>Delete</div>
+            <button disabled={isDeleting} onClick={() => mutate(activityId)}>
+                Delete
+            </button>
         </TableRow>
     );
 }
