@@ -12,6 +12,7 @@ import Members from "./pages/Members";
 import { Navigate } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Settings from "./pages/Settings";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -44,6 +45,22 @@ function App() {
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
+            <Toaster
+                position="top=center"
+                gutter={12}
+                toastOptions={{
+                    success: { duration: 3000 },
+                    error: { duration: 5000 },
+                    style: {
+                        fontSize: "1.6rem",
+                        maxWidth: "50rem",
+                        padding: "1.6rem 2.4rem",
+                        backgroundColor: "var(--color-grey-0)",
+                        color: "var(--color-grey-700)",
+                        border: "1px solid var(--color-grey-100)",
+                    },
+                }}
+            />
         </QueryClientProvider>
     );
 }
