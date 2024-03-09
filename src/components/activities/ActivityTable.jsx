@@ -10,7 +10,7 @@ const Table = styled.div`
     background-color: var(--color-grey-0);
     border-radius: 7px;
     overflow: hidden;
-    font-family: "M PLUS Rounded 1c";
+    font-family: "Dosis";
 `;
 
 const TableHeader = styled.header`

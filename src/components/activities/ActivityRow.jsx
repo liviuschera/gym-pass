@@ -3,6 +3,7 @@ import { formatCurrency } from "../../utils/helpers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteActivity } from "../../services/APIactivities";
 import toast from "react-hot-toast";
+import Button from "../../ui/Button";
 
 const TableRow = styled.div`
     display: grid;
@@ -74,9 +75,14 @@ function ActivityRow({
             <p>{max_capacity}</p>
             <Price>{formatCurrency(regular_price)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>
-            <button disabled={isDeleting} onClick={() => mutate(activityId)}>
+            <Button
+                disabled={isDeleting}
+                onClick={() => mutate(activityId)}
+                size="small"
+                variation="danger"
+            >
                 Delete
-            </button>
+            </Button>
         </TableRow>
     );
 }
