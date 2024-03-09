@@ -3,11 +3,12 @@ import ActivityTable from "../components/activities/ActivityTable";
 import Button from "../ui/Button";
 import { useState } from "react";
 import Input from "../ui/Input";
+import CreateActivityForm from "../components/activities/CreateActivityForm";
 // import { useEffect } from "react";
 // import { getActivities } from "../services/getActivities";
 
 function Activities() {
-    const [show, setShow] = useState(false);
+    const [showForm, setShowForm] = useState(false);
     // useEffect(function () {
     //     (async () => console.log(await getActivities()))();
     // }, []);
@@ -18,15 +19,10 @@ function Activities() {
         <>
             <Heading>All activities</Heading>
             <ActivityTable />
-            <Button onClick={() => setShow((show) => !show)}>
+            <Button onClick={() => setShowForm((show) => !show)}>
                 Add new activity
             </Button>
-            {show && (
-                <div>
-                    Show
-                    <Input placeholder="Name" type="text"></Input>
-                </div>
-            )}
+            {showForm && <CreateActivityForm />}
         </>
     );
 }

@@ -10,7 +10,7 @@ const Table = styled.div`
     background-color: var(--color-grey-0);
     border-radius: 7px;
     overflow: hidden;
-    font-family: "Nunito", sans-serif;
+    font-family: "Source Code Pro", monospace;
 `;
 
 const TableHeader = styled.header`
