@@ -5,6 +5,7 @@ import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
+import { useForm } from "react-hook-form";
 
 const FormRow = styled.div`
     display: grid;
@@ -43,36 +44,59 @@ const Error = styled.span`
 `;
 
 function CreateActivityForm() {
+    const { register, handleSubmit } = useForm();
+    function onSubmit(data) {
+        console.log(data);
+    }
+
     return (
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             <FormRow>
                 <Label htmlFor="name">Activity name</Label>
-                <Input type="text" id="name" />
+                <Input type="text" id="name" {...register("name")} />
             </FormRow>
 
             <FormRow>
                 <Label htmlFor="maxCapacity">Maximum capacity</Label>
-                <Input type="number" id="maxCapacity" />
+                <Input
+                    type="number"
+                    id="maxCapacity"
+                    {...register("max_capacity")}
+                />
             </FormRow>
 
             <FormRow>
                 <Label htmlFor="regularPrice">Regular price</Label>
-                <Input type="number" id="regularPrice" />
+                <Input
+                    type="number"
+                    id="regularPrice"
+                    {...register("regular_price")}
+                />
             </FormRow>
 
             <FormRow>
                 <Label htmlFor="discount">Discount</Label>
-                <Input type="number" id="discount" defaultValue={0} />
+                <Input
+                    type="number"
+                    id="discount"
+                    defaultValue={0}
+                    {...register("discount")}
+                />
             </FormRow>
 
             <FormRow>
                 <Label htmlFor="description">Description for website</Label>
-                <Textarea type="number" id="description" defaultValue="" />
+                <Textarea
+                    type="number"
+                    id="description"
+                    defaultValue=""
+                    {...register("description")}
+                />
             </FormRow>
 
             <FormRow>
                 <Label htmlFor="image">Activity photo</Label>
-                <FileInput id="image" accept="image/*" />
+                <FileInput id="image" accept="image/*" {...register("image")} />
             </FormRow>
 
             <FormRow>
@@ -80,7 +104,7 @@ function CreateActivityForm() {
                 <Button variation="secondary" type="reset">
                     Cancel
                 </Button>
-                <Button>Edit Activity</Button>
+                <Button>Add Activity</Button>
             </FormRow>
         </Form>
     );
