@@ -8,6 +8,10 @@ import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
 import Label from "../../ui/Label";
+import { createActivity } from "../../services/APIactivities";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import Spinner from "../../ui/Spinner";
 
 const Error = styled.span`
     font-size: 1.4rem;
@@ -20,10 +24,11 @@ const initialState = {
     discount: 0,
     description: "",
     image: "",
+    type: "",
 };
 
 function reducer(state, action) {
-    console.log(action);
+    console.log(state, action);
     switch (action.type) {
         case "name":
             return { ...state, name: action.payload };
@@ -37,6 +42,8 @@ function reducer(state, action) {
             return { ...state, description: action.payload };
         case "image":
             return { ...state, image: action.payload };
+        case "type":
+            return { ...state, type: action.payload };
         case "reset":
             return initialState;
         default:
@@ -45,13 +52,31 @@ function reducer(state, action) {
 }
 
 function CreateActivityForm() {
+    const queryClient = useQueryClient();
+    const { isPending: isSaving, mutate } = useMutation({
+        mutationFn: (data) => createActivity(data),
+        onSuccess: () => {
+            toast.success("Activity created successfully");
+            // refresh the list of activities in ActivityTable refetching the data
+            queryClient.invalidateQueries({
+                queryKey: ["activities"],
+            });
+        },
+        onError: (error) => toast.error(error.message),
+    });
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(state);
+        mutate(state);
+        dispatch({ type: "reset" });
     };
 
+    if (isSaving) {
+        return <Spinner />;
+    }
     return (
         <Form onSubmit={handleSubmit}>
             <FormRow>
@@ -62,6 +87,18 @@ function CreateActivityForm() {
                     value={state.name}
                     onChange={(e) =>
                         dispatch({ type: "name", payload: e.target.value })
+                    }
+                />
+            </FormRow>
+
+            <FormRow>
+                <Label htmlFor="type">Activity type</Label>
+                <Input
+                    type="text"
+                    id="type"
+                    value={state.type}
+                    onChange={(e) =>
+                        dispatch({ type: "type", payload: e.target.value })
                     }
                 />
             </FormRow>

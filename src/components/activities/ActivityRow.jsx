@@ -42,21 +42,20 @@ const Discount = styled.div`
     color: var(--color-green-700);
 `;
 
-function ActivityRow({
-    activity: {
+function ActivityRow({ activity }) {
+    const {
         id: activityId,
         image,
         name,
-        regular_price,
+        regularPrice,
         discount,
         description,
         type,
-        max_capacity,
-    },
-}) {
+        maxCapacity,
+    } = activity;
     const queryClient = useQueryClient();
 
-    const { isLoading: isDeleting, mutate } = useMutation({
+    const { isPending: isDeleting, mutate } = useMutation({
         mutationFn: (id) => deleteActivity(id),
         onSuccess: () => {
             toast.success("Activity deleted successfully");
@@ -72,8 +71,8 @@ function ActivityRow({
             <Activity>{name}</Activity>
             <p>{type}</p>
             {/* <div>{description}</div> */}
-            <p>{max_capacity}</p>
-            <Price>{formatCurrency(regular_price)}</Price>
+            <p>{maxCapacity}</p>
+            <Price>{formatCurrency(regularPrice)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>
             <Button
                 disabled={isDeleting}

@@ -11,6 +11,16 @@ export async function getActivities() {
     return data;
 }
 
+export async function createActivity(newActivity) {
+    const { data, error } = await supabase
+        .from("activities")
+        .insert([newActivity]);
+    if (error) {
+        console.error(error);
+        throw new Error("Unable to create the activity");
+    }
+}
+
 export async function deleteActivity(id) {
     const { data, error } = await supabase
         .from("activities")

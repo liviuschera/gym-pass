@@ -30,7 +30,7 @@ const TableHeader = styled.header`
 
 function ActivityTable() {
     const {
-        isLoading,
+        isPending,
         data: activities,
         error,
     } = useQuery({
@@ -38,7 +38,7 @@ function ActivityTable() {
         queryFn: getActivities,
     });
 
-    if (isLoading) {
+    if (isPending) {
         return <Spinner />;
     }
     return (
