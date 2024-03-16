@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useReducer } from "react";
 
 import Input from "../../ui/Input";
@@ -13,10 +12,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 
-// const Error = styled.span`
-//     font-size: 1.4rem;
-//     color: var(--color-red-700);
-// `;
 const initialState = {
     name: "",
     maxCapacity: 1,
@@ -83,7 +78,7 @@ function CreateActivityForm() {
         let isValid = true;
 
         if (state.name.length < 3) {
-            errors.name = "Name must be at least 3 characters long";
+            errors.name = "Activity name must be at least 3 characters long";
             isValid = false;
         }
         if (state.maxCapacity < 1) {
@@ -97,7 +92,7 @@ function CreateActivityForm() {
             isValid = false;
         }
         if (state.discount > state.regularPrice) {
-            errors.description = "Discount must be less than regular price";
+            errors.discount = "Discount must be less than regular price";
             isValid = false;
         }
         if (!isValidURL(state.image)) {
@@ -115,12 +110,7 @@ function CreateActivityForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!isFormValid()) {
-            for (const [key, value] of Object.entries(state.errors)) {
-                toast.error(value);
-            }
-            return;
-        }
+        if (!isFormValid()) return;
         mutate(state);
     }
 
@@ -129,8 +119,7 @@ function CreateActivityForm() {
     }
     return (
         <Form onSubmit={handleSubmit}>
-            <FormRow>
-                <Label htmlFor="name">Activity name</Label>
+            <FormRow error={state?.errors?.name} label="Activity name">
                 <Input
                     type="text"
                     id="name"
@@ -142,8 +131,7 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="type">Activity type</Label>
+            <FormRow error={state?.errors?.type} label="Activity type">
                 <Input
                     type="text"
                     id="type"
@@ -155,8 +143,7 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="maxCapacity">Maximum capacity</Label>
+            <FormRow error={state?.errors?.maxCapacity} label="Max capacity">
                 <Input
                     type="number"
                     id="maxCapacity"
@@ -171,8 +158,7 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="regularPrice">Regular price</Label>
+            <FormRow error={state?.errors?.regularPrice} label="Regular price">
                 <Input
                     type="number"
                     id="regularPrice"
@@ -186,8 +172,7 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="discount">Discount</Label>
+            <FormRow error={state?.errors?.discount} label="Discount">
                 <Input
                     type="number"
                     id="discount"
@@ -201,8 +186,10 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="description">Description for website</Label>
+            <FormRow
+                error={state?.errors?.description}
+                label="Activity description"
+            >
                 <Textarea
                     type="number"
                     id="description"
@@ -217,8 +204,7 @@ function CreateActivityForm() {
                 />
             </FormRow>
 
-            <FormRow>
-                <Label htmlFor="image">Activity photo</Label>
+            <FormRow error={state?.errors?.image} label="Activity image">
                 <FileInput
                     id="image"
                     accept="image/*"
