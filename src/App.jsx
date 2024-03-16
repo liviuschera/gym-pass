@@ -46,11 +46,11 @@ function App() {
                 </Routes>
             </BrowserRouter>
             <Toaster
-                position="top=center"
+                position="top-center"
                 gutter={12}
                 toastOptions={{
                     success: { duration: 3000 },
-                    error: { duration: 5000 },
+                    error: { duration: 7000 },
                     style: {
                         fontSize: "1.6rem",
                         maxWidth: "50rem",

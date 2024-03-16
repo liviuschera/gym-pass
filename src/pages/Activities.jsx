@@ -2,7 +2,6 @@ import Heading from "../ui/Heading";
 import ActivityTable from "../components/activities/ActivityTable";
 import Button from "../ui/Button";
 import { useState } from "react";
-import Input from "../ui/Input";
 import CreateActivityForm from "../components/activities/CreateActivityForm";
 // import { useEffect } from "react";
 // import { getActivities } from "../services/getActivities";

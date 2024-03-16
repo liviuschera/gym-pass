@@ -13,13 +13,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 
-const Error = styled.span`
-    font-size: 1.4rem;
-    color: var(--color-red-700);
-`;
+// const Error = styled.span`
+//     font-size: 1.4rem;
+//     color: var(--color-red-700);
+// `;
 const initialState = {
     name: "",
-    maxCapacity: 0,
+    maxCapacity: 1,
     regularPrice: 0,
     discount: 0,
     description: "",
@@ -28,7 +28,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
-    console.log(state, action);
+    console.log(state, "ACTION: ", action);
     switch (action.type) {
         case "name":
             return { ...state, name: action.payload };
@@ -44,6 +44,8 @@ function reducer(state, action) {
             return { ...state, image: action.payload };
         case "type":
             return { ...state, type: action.payload };
+        case "errors":
+            return { ...state, errors: action.payload };
         case "reset":
             return initialState;
         default:
@@ -53,7 +55,7 @@ function reducer(state, action) {
 
 function CreateActivityForm() {
     const queryClient = useQueryClient();
-    const { isPending: isSaving, mutate } = useMutation({
+    const { isPending: isCreating, mutate } = useMutation({
         mutationFn: (data) => createActivity(data),
         onSuccess: () => {
             toast.success("Activity created successfully");
@@ -61,20 +63,68 @@ function CreateActivityForm() {
             queryClient.invalidateQueries({
                 queryKey: ["activities"],
             });
+            dispatch({ type: "reset" });
         },
         onError: (error) => toast.error(error.message),
     });
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(state);
-        mutate(state);
-        dispatch({ type: "reset" });
-    };
+    function isValidURL(url) {
+        try {
+            new URL(url);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+    function isFormValid() {
+        const errors = {};
+        let isValid = true;
 
-    if (isSaving) {
+        if (state.name.length < 3) {
+            errors.name = "Name must be at least 3 characters long";
+            isValid = false;
+        }
+        if (state.maxCapacity < 1) {
+            errors.maxCapacity = "Max capacity must be at least 1 person";
+            isValid = false;
+        }
+
+        if (state.description.length < 5) {
+            errors.description =
+                "Description must be at least 5 characters long";
+            isValid = false;
+        }
+        if (state.discount > state.regularPrice) {
+            errors.description = "Discount must be less than regular price";
+            isValid = false;
+        }
+        if (!isValidURL(state.image)) {
+            errors.image = "Invalid image URL";
+            isValid = false;
+        }
+        if (state.type.length < 3) {
+            errors.type = "Type of activity must be at least 3 characters long";
+            isValid = false;
+        }
+        !isValid && dispatch({ type: "errors", payload: errors });
+
+        return isValid;
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        if (!isFormValid()) {
+            for (const [key, value] of Object.entries(state.errors)) {
+                toast.error(value);
+            }
+            return;
+        }
+        mutate(state);
+    }
+
+    if (isCreating) {
         return <Spinner />;
     }
     return (
@@ -85,6 +135,7 @@ function CreateActivityForm() {
                     type="text"
                     id="name"
                     value={state.name}
+                    required
                     onChange={(e) =>
                         dispatch({ type: "name", payload: e.target.value })
                     }
@@ -97,6 +148,7 @@ function CreateActivityForm() {
                     type="text"
                     id="type"
                     value={state.type}
+                    required
                     onChange={(e) =>
                         dispatch({ type: "type", payload: e.target.value })
                     }
@@ -109,6 +161,7 @@ function CreateActivityForm() {
                     type="number"
                     id="maxCapacity"
                     value={state.maxCapacity}
+                    required
                     onChange={(e) =>
                         dispatch({
                             type: "maxCapacity",
@@ -154,6 +207,7 @@ function CreateActivityForm() {
                     type="number"
                     id="description"
                     value={state.description}
+                    required
                     onChange={(e) =>
                         dispatch({
                             type: "description",
@@ -169,6 +223,7 @@ function CreateActivityForm() {
                     id="image"
                     accept="image/*"
                     value={state.image}
+                    required
                     onChange={(e) =>
                         dispatch({ type: "image", payload: e.target.value })
                     }
@@ -183,7 +238,7 @@ function CreateActivityForm() {
                 >
                     Cancel
                 </Button>
-                <Button>Add Activity</Button>
+                <Button disabled={isCreating}>Add Activity</Button>
             </FormRow>
         </Form>
     );
