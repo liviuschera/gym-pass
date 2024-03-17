@@ -6,7 +6,6 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
-import Label from "../../ui/Label";
 import { createActivity } from "../../services/APIactivities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
@@ -65,14 +64,6 @@ function CreateActivityForm() {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    function isValidURL(url) {
-        try {
-            new URL(url);
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
     function isFormValid() {
         const errors = {};
         let isValid = true;
@@ -95,10 +86,7 @@ function CreateActivityForm() {
             errors.discount = "Discount must be less than regular price";
             isValid = false;
         }
-        if (!isValidURL(state.image)) {
-            errors.image = "Invalid image URL";
-            isValid = false;
-        }
+
         if (state.type.length < 3) {
             errors.type = "Type of activity must be at least 3 characters long";
             isValid = false;
@@ -125,6 +113,7 @@ function CreateActivityForm() {
                     id="name"
                     value={state.name}
                     required
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({ type: "name", payload: e.target.value })
                     }
@@ -137,6 +126,7 @@ function CreateActivityForm() {
                     id="type"
                     value={state.type}
                     required
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({ type: "type", payload: e.target.value })
                     }
@@ -149,6 +139,7 @@ function CreateActivityForm() {
                     id="maxCapacity"
                     value={state.maxCapacity}
                     required
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({
                             type: "maxCapacity",
@@ -177,6 +168,7 @@ function CreateActivityForm() {
                     type="number"
                     id="discount"
                     value={state.discount}
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({
                             type: "discount",
@@ -195,6 +187,7 @@ function CreateActivityForm() {
                     id="description"
                     value={state.description}
                     required
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({
                             type: "description",
@@ -210,6 +203,7 @@ function CreateActivityForm() {
                     accept="image/*"
                     value={state.image}
                     required
+                    disabled={isCreating}
                     onChange={(e) =>
                         dispatch({ type: "image", payload: e.target.value })
                     }
