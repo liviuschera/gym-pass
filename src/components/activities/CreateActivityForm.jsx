@@ -17,12 +17,12 @@ const initialState = {
     regularPrice: 0,
     discount: 0,
     description: "",
-    image: "",
+    image: [],
     type: "",
 };
 
 function reducer(state, action) {
-    console.log(state, "ACTION: ", action);
+    console.log("ACTION: ", action, "STATE: ", state);
     switch (action.type) {
         case "name":
             return { ...state, name: action.payload };
@@ -63,31 +63,40 @@ function CreateActivityForm() {
     });
 
     const [state, dispatch] = useReducer(reducer, initialState);
+    const {
+        name,
+        maxCapacity,
+        regularPrice,
+        discount,
+        description,
+        image,
+        type,
+    } = state;
 
     function isFormValid() {
         const errors = {};
         let isValid = true;
 
-        if (state.name.length < 3) {
+        if (name.length < 3) {
             errors.name = "Activity name must be at least 3 characters long";
             isValid = false;
         }
-        if (state.maxCapacity < 1) {
+        if (maxCapacity < 1) {
             errors.maxCapacity = "Max capacity must be at least 1 person";
             isValid = false;
         }
 
-        if (state.description.length < 5) {
+        if (description.length < 5) {
             errors.description =
                 "Description must be at least 5 characters long";
             isValid = false;
         }
-        if (state.discount > state.regularPrice) {
+        if (discount > regularPrice) {
             errors.discount = "Discount must be less than regular price";
             isValid = false;
         }
 
-        if (state.type.length < 3) {
+        if (type.length < 3) {
             errors.type = "Type of activity must be at least 3 characters long";
             isValid = false;
         }
@@ -98,8 +107,24 @@ function CreateActivityForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        console.log("handleSubmit ==>: ", state);
         if (!isFormValid()) return;
         mutate(state);
+        // mutate({ ...state, image: image[0] });
+    }
+
+    function handleFileInput(event) {
+        // if (event.target.files.length) {
+        //     const arrFiles = Array.from(event.target.files);
+        //     const files = arrFiles.map((file, index) => {
+        //         const src = window.URL.createObjectURL(file);
+        //         return { file, id: index, src };
+        //     });
+        //     // dispatch({ type: "load", files });
+        //     console.log("FILES ==>: ", files);
+        // }
+        dispatch({ type: "image", payload: event.target.files[0] });
+        // dispatch({ type: "image", payload: event.target.value });
     }
 
     if (isCreating) {
@@ -111,7 +136,7 @@ function CreateActivityForm() {
                 <Input
                     type="text"
                     id="name"
-                    value={state.name}
+                    value={name}
                     required
                     disabled={isCreating}
                     onChange={(e) =>
@@ -124,7 +149,7 @@ function CreateActivityForm() {
                 <Input
                     type="text"
                     id="type"
-                    value={state.type}
+                    value={type}
                     required
                     disabled={isCreating}
                     onChange={(e) =>
@@ -137,7 +162,7 @@ function CreateActivityForm() {
                 <Input
                     type="number"
                     id="maxCapacity"
-                    value={state.maxCapacity}
+                    value={maxCapacity}
                     required
                     disabled={isCreating}
                     onChange={(e) =>
@@ -153,7 +178,7 @@ function CreateActivityForm() {
                 <Input
                     type="number"
                     id="regularPrice"
-                    value={state.regularPrice}
+                    value={regularPrice}
                     onChange={(e) =>
                         dispatch({
                             type: "regularPrice",
@@ -167,7 +192,7 @@ function CreateActivityForm() {
                 <Input
                     type="number"
                     id="discount"
-                    value={state.discount}
+                    value={discount}
                     disabled={isCreating}
                     onChange={(e) =>
                         dispatch({
@@ -185,7 +210,7 @@ function CreateActivityForm() {
                 <Textarea
                     type="number"
                     id="description"
-                    value={state.description}
+                    value={description}
                     required
                     disabled={isCreating}
                     onChange={(e) =>
@@ -201,13 +226,10 @@ function CreateActivityForm() {
                 <FileInput
                     id="image"
                     accept="image/*"
-                    value={state.image}
-                    required
                     disabled={isCreating}
-                    onChange={(e) =>
-                        dispatch({ type: "image", payload: e.target.value })
-                    }
+                    onChange={(e) => handleFileInput(e)}
                 />
+                {/* <span>{image}</span> */}
             </FormRow>
 
             <FormRow>

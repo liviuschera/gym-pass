@@ -7,7 +7,7 @@ import Button from "../../ui/Button";
 
 const TableRow = styled.div`
     display: grid;
-    grid-template-columns: 0.6fr 1.8fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.6fr 1.8fr 2fr 1fr 1fr 1fr 1fr 1fr;
     column-gap: 2.4rem;
     align-items: center;
     padding: 1.4rem 2.4rem;
@@ -25,6 +25,13 @@ const Img = styled.img`
     object-fit: cover;
     object-position: center;
     transform: scale(1.5) translateX(-7px);
+`;
+
+const Description = styled.div`
+    font-size: 1.1rem;
+    color: var(--color-grey-500);
+    line-height: 1.1;
+    font-weight: 500;
 `;
 
 const Activity = styled.div`
@@ -55,6 +62,13 @@ function ActivityRow({ activity }) {
     } = activity;
     const queryClient = useQueryClient();
 
+    function trimDescription() {
+        if (description.length > 55) {
+            return description.slice(0, 55) + "...";
+        }
+        return description;
+    }
+
     const { isPending: isDeleting, mutate } = useMutation({
         mutationFn: (id) => deleteActivity(id),
         onSuccess: () => {
@@ -69,8 +83,8 @@ function ActivityRow({ activity }) {
         <TableRow role="row">
             <Img src={image} alt={name} />
             <Activity>{name}</Activity>
+            <Description>{trimDescription()}</Description>
             <p>{type}</p>
-            {/* <div>{description}</div> */}
             <p>{maxCapacity}</p>
             <Price>{formatCurrency(regularPrice)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>

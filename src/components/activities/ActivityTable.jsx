@@ -15,7 +15,7 @@ const Table = styled.div`
 
 const TableHeader = styled.header`
     display: grid;
-    grid-template-columns: 0.6fr 1.8fr 2fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.6fr 1.8fr 2fr 1fr 1fr 1fr 1fr 1fr;
     column-gap: 2.4rem;
     align-items: center;
 
@@ -46,12 +46,12 @@ function ActivityTable() {
             <TableHeader role="row">
                 <div>Image</div>
                 <div>Name</div>
-                {/* <div>Description</div> */}
+                <div>Description</div>
                 <div>Type</div>
                 <div>Max Capacity</div>
                 <div>Regular Price</div>
                 <div>Discount</div>
-                <div>Delete</div>
+                {/* <div>Delete</div> */}
             </TableHeader>
             {activities.map((activity) => (
                 <ActivityRow key={activity.id} activity={activity} />
