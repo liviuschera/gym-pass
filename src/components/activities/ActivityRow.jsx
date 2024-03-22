@@ -88,14 +88,23 @@ function ActivityRow({ activity }) {
             <p>{maxCapacity}</p>
             <Price>{formatCurrency(regularPrice)}</Price>
             <Discount>{formatCurrency(discount)}</Discount>
-            <Button
-                disabled={isDeleting}
-                onClick={() => mutate(activityId)}
-                size="small"
-                variation="danger"
-            >
-                Delete
-            </Button>
+            <div>
+                <Button
+                    // disabled={isDeleting}
+                    // onClick={() => mutate(activityId)}
+                    size="small"
+                >
+                    Edit
+                </Button>
+                <Button
+                    disabled={isDeleting}
+                    onClick={() => mutate(activityId)}
+                    size="small"
+                    variation="danger"
+                >
+                    Delete
+                </Button>
+            </div>
         </TableRow>
     );
 }

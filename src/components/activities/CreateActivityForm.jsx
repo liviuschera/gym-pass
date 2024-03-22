@@ -110,21 +110,10 @@ function CreateActivityForm() {
         console.log("handleSubmit ==>: ", state);
         if (!isFormValid()) return;
         mutate(state);
-        // mutate({ ...state, image: image[0] });
     }
 
     function handleFileInput(event) {
-        // if (event.target.files.length) {
-        //     const arrFiles = Array.from(event.target.files);
-        //     const files = arrFiles.map((file, index) => {
-        //         const src = window.URL.createObjectURL(file);
-        //         return { file, id: index, src };
-        //     });
-        //     // dispatch({ type: "load", files });
-        //     console.log("FILES ==>: ", files);
-        // }
         dispatch({ type: "image", payload: event.target.files[0] });
-        // dispatch({ type: "image", payload: event.target.value });
     }
 
     if (isCreating) {
@@ -229,7 +218,6 @@ function CreateActivityForm() {
                     disabled={isCreating}
                     onChange={(e) => handleFileInput(e)}
                 />
-                {/* <span>{image}</span> */}
             </FormRow>
 
             <FormRow>
