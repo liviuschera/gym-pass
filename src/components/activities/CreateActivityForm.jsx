@@ -10,6 +10,7 @@ import { createActivity } from "../../services/APIactivities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
+import { useEffect } from "react";
 
 const initialState = {
     name: "",
@@ -40,6 +41,8 @@ function reducer(state, action) {
             return { ...state, type: action.payload };
         case "errors":
             return { ...state, errors: action.payload };
+        case "isEditForm":
+            return { ...state, ...action.payload };
         case "reset":
             return initialState;
         default:
@@ -47,7 +50,7 @@ function reducer(state, action) {
     }
 }
 
-function CreateActivityForm() {
+function CreateActivityForm({ activityToEdit, isEditForm }) {
     const queryClient = useQueryClient();
     const { isPending: isCreating, mutate } = useMutation({
         mutationFn: (data) => createActivity(data),
@@ -63,6 +66,14 @@ function CreateActivityForm() {
     });
 
     const [state, dispatch] = useReducer(reducer, initialState);
+
+    // if isEditForm is true, set the state to the activityToEdit and use useEffect to listen to activityToEdit to prevent unnecessary (infinite) re-renders
+    useEffect(() => {
+        if (activityToEdit) {
+            dispatch({ type: "isEditForm", payload: activityToEdit });
+        }
+    }, [activityToEdit]);
+
     const {
         name,
         maxCapacity,
@@ -71,8 +82,9 @@ function CreateActivityForm() {
         description,
         image,
         type,
-    } = state;
+    } = isEditForm ? activityToEdit : state;
 
+    console.log(`STATE ==> `, state);
     function isFormValid() {
         const errors = {};
         let isValid = true;
@@ -125,7 +137,7 @@ function CreateActivityForm() {
                 <Input
                     type="text"
                     id="name"
-                    value={name}
+                    value={name ?? activity.name}
                     required
                     disabled={isCreating}
                     onChange={(e) =>
@@ -167,7 +179,7 @@ function CreateActivityForm() {
                 <Input
                     type="number"
                     id="regularPrice"
-                    value={regularPrice}
+                    value={regularPrice ?? 0}
                     onChange={(e) =>
                         dispatch({
                             type: "regularPrice",
@@ -181,7 +193,7 @@ function CreateActivityForm() {
                 <Input
                     type="number"
                     id="discount"
-                    value={discount}
+                    value={discount ?? 0}
                     disabled={isCreating}
                     onChange={(e) =>
                         dispatch({

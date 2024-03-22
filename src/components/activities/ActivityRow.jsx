@@ -1,9 +1,11 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteActivity } from "../../services/APIactivities";
 import toast from "react-hot-toast";
 import Button from "../../ui/Button";
+import CreateActivityForm from "./CreateActivityForm";
 
 const TableRow = styled.div`
     display: grid;
@@ -61,10 +63,11 @@ function ActivityRow({ activity }) {
         maxCapacity,
     } = activity;
     const queryClient = useQueryClient();
+    const [showForm, setShowForm] = useState(false);
 
     function trimDescription() {
         if (description.length > 55) {
-            return description.slice(0, 55) + "...";
+            return `${description.slice(0, 55)}` + "...";
         }
         return description;
     }
@@ -80,32 +83,41 @@ function ActivityRow({ activity }) {
         onError: (error) => toast.error(error.message),
     });
     return (
-        <TableRow role="row">
-            <Img src={image} alt={name} />
-            <Activity>{name}</Activity>
-            <Description>{trimDescription()}</Description>
-            <p>{type}</p>
-            <p>{maxCapacity}</p>
-            <Price>{formatCurrency(regularPrice)}</Price>
-            <Discount>{formatCurrency(discount)}</Discount>
-            <div>
-                <Button
-                    // disabled={isDeleting}
-                    // onClick={() => mutate(activityId)}
-                    size="small"
-                >
-                    Edit
-                </Button>
-                <Button
-                    disabled={isDeleting}
-                    onClick={() => mutate(activityId)}
-                    size="small"
-                    variation="danger"
-                >
-                    Delete
-                </Button>
-            </div>
-        </TableRow>
+        <>
+            <TableRow role="row">
+                <Img src={image} alt={name} />
+                <Activity>{name}</Activity>
+                <Description>{trimDescription()}</Description>
+                <p>{type}</p>
+                <p>{maxCapacity}</p>
+                <Price>{formatCurrency(regularPrice)}</Price>
+                <Discount>{formatCurrency(discount)}</Discount>
+                <div>
+                    <Button
+                        // disabled={isDeleting}
+                        onClick={() => setShowForm((show) => !show)}
+                        size="small"
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        disabled={isDeleting}
+                        onClick={() => mutate(activityId)}
+                        size="small"
+                        variation="danger"
+                    >
+                        Delete
+                    </Button>
+                </div>
+            </TableRow>
+            {showForm && (
+                <CreateActivityForm
+                    activityToEdit={activity}
+                    isEditForm={true}
+                />
+            )}
+            {}
+        </>
     );
 }
 
