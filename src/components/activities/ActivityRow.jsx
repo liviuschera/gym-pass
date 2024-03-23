@@ -48,11 +48,12 @@ const Price = styled.div`
 
 const Discount = styled.div`
     font-weight: 500;
-    color: var(--color-green-700);
+    color: var(--color-green-600);
 `;
 
 const Percent = styled.span`
     font-weight: 700;
+    color: var(--color-green-500);
 `;
 
 function ActivityRow({ activity }) {
@@ -103,7 +104,7 @@ function ActivityRow({ activity }) {
                     <Discount>
                         {formatCurrency(discount)}(
                         <Percent>
-                            -{Math.floor((discount / regularPrice) * 100)}
+                            &minus;{Math.floor((discount / regularPrice) * 100)}
                             &#65285;
                         </Percent>
                         )
