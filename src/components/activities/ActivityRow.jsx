@@ -105,7 +105,7 @@ function ActivityRow({ activity }) {
                         {formatCurrency(discount)}(
                         <Percent>
                             &minus;{Math.floor((discount / regularPrice) * 100)}
-                            &#65285;
+                            &#37;
                         </Percent>
                         )
                     </Discount>
