@@ -201,6 +201,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                     type="number"
                     id="regularPrice"
                     value={regularPrice}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({
                             type: "regularPrice",

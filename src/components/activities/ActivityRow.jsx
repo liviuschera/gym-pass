@@ -51,6 +51,10 @@ const Discount = styled.div`
     color: var(--color-green-700);
 `;
 
+const Percent = styled.span`
+    font-weight: 700;
+`;
+
 function ActivityRow({ activity }) {
     const {
         id: activityId,
@@ -90,8 +94,23 @@ function ActivityRow({ activity }) {
                 <Description>{trimDescription()}</Description>
                 <p>{type}</p>
                 <p>{maxCapacity}</p>
-                <Price>{formatCurrency(regularPrice)}</Price>
-                <Discount>{formatCurrency(discount)}</Discount>
+                {regularPrice > 0 ? (
+                    <Price>{formatCurrency(regularPrice)}</Price>
+                ) : (
+                    <span>&mdash;</span>
+                )}
+                {discount > 0 ? (
+                    <Discount>
+                        {formatCurrency(discount)}(
+                        <Percent>
+                            -{Math.floor((discount / regularPrice) * 100)}
+                            &#65285;
+                        </Percent>
+                        )
+                    </Discount>
+                ) : (
+                    <span>&mdash;</span>
+                )}
                 <div>
                     <Button
                         // disabled={isDeleting}
