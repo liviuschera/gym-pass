@@ -11,17 +11,41 @@ export async function getActivities() {
     return data;
 }
 
-export async function createActivity(newActivity) {
+export async function createEditActivity(newActivity, id) {
+    // console.log("newActivity:=>>>>>>> ", newActivity);
+
     const imageName = `${Math.random()}-${newActivity.image.name}`.replaceAll(
         "/",
         ""
     ); //remove / from image name to avoid creating new folders
 
-    const imagePath = `${supabaseUrl}/storage/v1/object/public/activities-images/${imageName}`;
-    // 1. create activity
-    const { data, error } = await supabase
-        .from("activities")
-        .insert([{ ...newActivity, image: imagePath }]);
+    // checking if  user is uploading a new image or the image is already uploaded
+    const hasImagePath = newActivity?.image?.startsWith?.(supabaseUrl);
+    const imagePath = hasImagePath
+        ? newActivity.image
+        : `${supabaseUrl}/storage/v1/object/public/activities-images/${imageName}`;
+
+    // 1. CREATE/EDIT activity
+    let query = supabase.from("activities");
+
+    // CREATE activity
+    if (!id) {
+        query = query
+            .insert([{ ...newActivity, image: imagePath }])
+            .select()
+            .single();
+    }
+
+    // EDIT activity
+    if (id) {
+        query = query
+            .update([{ ...newActivity, image: imagePath }])
+            .eq("id", id)
+            .select()
+            .single();
+    }
+
+    const { data, error } = await query.select().single();
     if (error) {
         console.error(error);
         throw new Error(

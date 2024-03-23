@@ -6,7 +6,7 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
-import { createActivity } from "../../services/APIactivities";
+import { createEditActivity } from "../../services/APIactivities";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
@@ -52,8 +52,9 @@ function reducer(state, action) {
 
 function CreateActivityForm({ activityToEdit, isEditForm }) {
     const queryClient = useQueryClient();
-    const { isPending: isCreating, mutate } = useMutation({
-        mutationFn: (data) => createActivity(data),
+
+    const { isPending: isCreating, mutate: createActivity } = useMutation({
+        mutationFn: (data) => createEditActivity(data),
         onSuccess: () => {
             toast.success("Activity created successfully");
             // refresh the list of activities in ActivityTable refetching the data
@@ -65,13 +66,26 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
         onError: (error) => toast.error(error.message),
     });
 
+    const { isPending: isEditing, mutate: editActivity } = useMutation({
+        mutationFn: ({ newActivityData, id }) =>
+            createEditActivity(newActivityData, id),
+        onSuccess: () => {
+            toast.success("Activity updated successfully");
+            // refresh the list of activities in ActivityTable refetching the data
+            queryClient.invalidateQueries({
+                queryKey: ["activities"],
+            });
+        },
+        onError: (error) => toast.error(error.message),
+    });
+
+    const isWorking = isCreating || isEditing;
+
     const [state, dispatch] = useReducer(reducer, initialState);
 
     // if isEditForm is true, set the state to the activityToEdit and use useEffect to listen to activityToEdit to prevent unnecessary (infinite) re-renders
     useEffect(() => {
-        if (activityToEdit) {
-            dispatch({ type: "isEditForm", payload: activityToEdit });
-        }
+        dispatch({ type: "isEditForm", payload: activityToEdit });
     }, [activityToEdit]);
 
     const {
@@ -82,7 +96,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
         description,
         image,
         type,
-    } = isEditForm ? activityToEdit : state;
+    } = state;
 
     console.log(`STATE ==> `, state);
     function isFormValid() {
@@ -119,9 +133,16 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("handleSubmit ==>: ", state);
+        // const image =
+        //     typeof state.image === "string" ? state.image : e.target.files[0];
+        // console.log("handleSubmit state ==>: ", state);
         if (!isFormValid()) return;
-        mutate(state);
+
+        if (isEditForm) {
+            editActivity({ newActivityData: state, id: activityToEdit.id });
+        } else {
+            createActivity(state);
+        }
     }
 
     function handleFileInput(event) {
@@ -137,9 +158,9 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 <Input
                     type="text"
                     id="name"
-                    value={name ?? activity.name}
+                    value={name}
                     required
-                    disabled={isCreating}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({ type: "name", payload: e.target.value })
                     }
@@ -152,7 +173,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                     id="type"
                     value={type}
                     required
-                    disabled={isCreating}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({ type: "type", payload: e.target.value })
                     }
@@ -165,7 +186,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                     id="maxCapacity"
                     value={maxCapacity}
                     required
-                    disabled={isCreating}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({
                             type: "maxCapacity",
@@ -179,7 +200,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 <Input
                     type="number"
                     id="regularPrice"
-                    value={regularPrice ?? 0}
+                    value={regularPrice}
                     onChange={(e) =>
                         dispatch({
                             type: "regularPrice",
@@ -193,8 +214,8 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 <Input
                     type="number"
                     id="discount"
-                    value={discount ?? 0}
-                    disabled={isCreating}
+                    value={discount}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({
                             type: "discount",
@@ -213,7 +234,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                     id="description"
                     value={description}
                     required
-                    disabled={isCreating}
+                    disabled={isWorking}
                     onChange={(e) =>
                         dispatch({
                             type: "description",
@@ -227,7 +248,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 <FileInput
                     id="image"
                     accept="image/*"
-                    disabled={isCreating}
+                    disabled={isWorking}
                     onChange={(e) => handleFileInput(e)}
                 />
             </FormRow>
@@ -240,7 +261,9 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 >
                     Cancel
                 </Button>
-                <Button disabled={isCreating}>Add Activity</Button>
+                <Button disabled={isWorking}>
+                    {isEditForm ? "Edit activity" : "Create new activity"}
+                </Button>
             </FormRow>
         </Form>
     );
