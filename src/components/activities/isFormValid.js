@@ -1,32 +1,35 @@
-export function isFormValid(state, dispatch) {
+export function isFormValid(state, setErrors) {
+    // const errors = {};
+    let isValid = true;
     const { name, maxCapacity, regularPrice, discount, description, type } =
         state;
-    const errors = {};
-    let isValid = true;
 
     if (name.length < 3) {
-        errors.name = "Activity name must be at least 3 characters long";
+        setErrors({ name: "Activity name must be at least 3 characters long" });
         isValid = false;
     }
     if (maxCapacity < 1) {
-        errors.maxCapacity = "Max capacity must be at least 1 person";
+        setErrors({ maxCapacity: "Max capacity must be at least 1 person" });
         isValid = false;
     }
 
     if (description.length < 5) {
-        errors.description = "Description must be at least 5 characters long";
+        setErrors({
+            description: "Description must be at least 5 characters long",
+        });
         isValid = false;
     }
     if (discount > regularPrice) {
-        errors.discount = "Discount must be less than regular price";
+        setErrors({ discount: "Discount must be less than regular price" });
         isValid = false;
     }
 
     if (type.length < 3) {
-        errors.type = "Type of activity must be at least 3 characters long";
+        setErrors({
+            type: "Type of activity must be at least 3 characters long",
+        });
         isValid = false;
     }
-    !isValid && dispatch({ type: "errors", payload: errors });
 
     return isValid;
 }

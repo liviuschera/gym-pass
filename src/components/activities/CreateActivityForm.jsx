@@ -10,6 +10,7 @@ import FormRow from "../../ui/FormRow";
 import Spinner from "../../ui/Spinner";
 import { useEffect } from "react";
 import { isFormValid } from "./isFormValid";
+import { useState } from "react";
 
 const initialState = {
     name: "",
@@ -38,8 +39,8 @@ function reducer(state, action) {
             return { ...state, image: action.payload };
         case "type":
             return { ...state, type: action.payload };
-        case "errors":
-            return { ...state, errors: action.payload };
+        // case "errors":
+        //     return { ...state, errors: action.payload };
         case "isEditForm":
             return { ...state, ...action.payload };
         case "reset":
@@ -53,6 +54,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
     const [state, dispatch] = useReducer(reducer, initialState);
     const { isCreating, createActivity } = useCreateActivity(dispatch);
     const { isEditing, editActivity } = useEditActivity();
+    const [errors, setErrors] = useState({});
 
     const isWorking = isCreating || isEditing;
 
@@ -68,7 +70,8 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!isFormValid(state, dispatch)) return;
+        console.log("ERRORS:=>", errors);
+        if (!isFormValid(state, setErrors)) return;
 
         if (isEditForm) {
             editActivity({ newActivityData: state, id: activityToEdit.id });
@@ -86,7 +89,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
     }
     return (
         <Form onSubmit={handleSubmit}>
-            <FormRow error={state?.errors?.name} label="Activity name">
+            <FormRow error={errors?.name} label="Activity name">
                 <Input
                     type="text"
                     id="name"
@@ -99,7 +102,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow error={state?.errors?.type} label="Activity type">
+            <FormRow error={errors?.type} label="Activity type">
                 <Input
                     type="text"
                     id="type"
@@ -112,7 +115,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow error={state?.errors?.maxCapacity} label="Max capacity">
+            <FormRow error={errors?.maxCapacity} label="Max capacity">
                 <Input
                     type="number"
                     id="maxCapacity"
@@ -128,7 +131,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow error={state?.errors?.regularPrice} label="Regular price">
+            <FormRow error={errors?.regularPrice} label="Regular price">
                 <Input
                     type="number"
                     id="regularPrice"
@@ -143,7 +146,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow error={state?.errors?.discount} label="Discount">
+            <FormRow error={errors?.discount} label="Discount">
                 <Input
                     type="number"
                     id="discount"
@@ -158,10 +161,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow
-                error={state?.errors?.description}
-                label="Activity description"
-            >
+            <FormRow error={errors?.description} label="Activity description">
                 <Textarea
                     type="number"
                     id="description"
@@ -177,7 +177,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 />
             </FormRow>
 
-            <FormRow error={state?.errors?.image} label="Activity image">
+            <FormRow error={errors?.image} label="Activity image">
                 <FileInput
                     id="image"
                     accept="image/*"
