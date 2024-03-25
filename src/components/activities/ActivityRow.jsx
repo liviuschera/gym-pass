@@ -14,6 +14,9 @@ import CreateActivityForm from "./CreateActivityForm";
 import { useDeleteActivity } from "./useDeleteActivty";
 
 function ActivityRow({ activity }) {
+    const [showForm, setShowForm] = useState(false);
+    const { isDeleting, deleteActivity } = useDeleteActivity();
+
     const {
         id: activityId,
         image,
@@ -24,8 +27,6 @@ function ActivityRow({ activity }) {
         type,
         maxCapacity,
     } = activity;
-    const [showForm, setShowForm] = useState(false);
-    const { isDeleting, deleteActivity } = useDeleteActivity();
 
     function trimDescription() {
         if (description.length > 55) {

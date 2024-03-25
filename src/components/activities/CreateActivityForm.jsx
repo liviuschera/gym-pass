@@ -1,14 +1,15 @@
 import { useReducer } from "react";
-
+import { useCreateActivity } from "./useCreateActivity";
+import { useEditActivity } from "./useEditActivity";
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
-import { createEditActivity } from "../../services/APIactivities";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+// import { createEditActivity } from "../../services/APIactivities";
+// import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 import { useEffect } from "react";
 
@@ -51,37 +52,11 @@ function reducer(state, action) {
 }
 
 function CreateActivityForm({ activityToEdit, isEditForm }) {
-    const queryClient = useQueryClient();
-
-    const { isPending: isCreating, mutate: createActivity } = useMutation({
-        mutationFn: (data) => createEditActivity(data),
-        onSuccess: () => {
-            toast.success("Activity created successfully");
-            // refresh the list of activities in ActivityTable refetching the data
-            queryClient.invalidateQueries({
-                queryKey: ["activities"],
-            });
-            dispatch({ type: "reset" });
-        },
-        onError: (error) => toast.error(error.message),
-    });
-
-    const { isPending: isEditing, mutate: editActivity } = useMutation({
-        mutationFn: ({ newActivityData, id }) =>
-            createEditActivity(newActivityData, id),
-        onSuccess: () => {
-            toast.success("Activity updated successfully");
-            // refresh the list of activities in ActivityTable refetching the data
-            queryClient.invalidateQueries({
-                queryKey: ["activities"],
-            });
-        },
-        onError: (error) => toast.error(error.message),
-    });
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const { isCreating, createActivity } = useCreateActivity(dispatch);
+    const { isEditing, editActivity } = useEditActivity();
 
     const isWorking = isCreating || isEditing;
-
-    const [state, dispatch] = useReducer(reducer, initialState);
 
     // if isEditForm is true, set the state to the activityToEdit and use useEffect to listen to activityToEdit to prevent unnecessary (infinite) re-renders
     useEffect(() => {
@@ -133,9 +108,6 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        // const image =
-        //     typeof state.image === "string" ? state.image : e.target.files[0];
-        // console.log("handleSubmit state ==>: ", state);
         if (!isFormValid()) return;
 
         if (isEditForm) {
