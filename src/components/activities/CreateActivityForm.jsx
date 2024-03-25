@@ -39,8 +39,6 @@ function reducer(state, action) {
             return { ...state, image: action.payload };
         case "type":
             return { ...state, type: action.payload };
-        // case "errors":
-        //     return { ...state, errors: action.payload };
         case "isEditForm":
             return { ...state, ...action.payload };
         case "reset":
@@ -70,7 +68,6 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log("ERRORS:=>", errors);
         if (!isFormValid(state, setErrors)) return;
 
         if (isEditForm) {

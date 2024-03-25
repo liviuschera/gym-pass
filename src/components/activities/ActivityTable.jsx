@@ -1,6 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { getActivities } from "../../services/APIactivities";
+import { useActivity } from "./useActivity";
 import Spinner from "../../ui/Spinner";
 import ActivityRow from "./ActivityRow";
 
@@ -29,14 +28,7 @@ const TableHeader = styled.header`
 `;
 
 function ActivityTable() {
-    const {
-        isPending,
-        data: activities,
-        error,
-    } = useQuery({
-        queryKey: ["activities"],
-        queryFn: getActivities,
-    });
+    const { isPending, activities, error } = useActivity();
 
     if (isPending) {
         return <Spinner />;
