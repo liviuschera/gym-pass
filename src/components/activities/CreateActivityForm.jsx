@@ -7,11 +7,9 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import FormRow from "../../ui/FormRow";
-// import { createEditActivity } from "../../services/APIactivities";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import toast from "react-hot-toast";
 import Spinner from "../../ui/Spinner";
 import { useEffect } from "react";
+import { isFormValid } from "./isFormValid";
 
 const initialState = {
     name: "",
@@ -63,52 +61,14 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
         dispatch({ type: "isEditForm", payload: activityToEdit });
     }, [activityToEdit]);
 
-    const {
-        name,
-        maxCapacity,
-        regularPrice,
-        discount,
-        description,
-        image,
-        type,
-    } = state;
+    const { name, maxCapacity, regularPrice, discount, description, type } =
+        state;
 
     console.log(`STATE ==> `, state);
-    function isFormValid() {
-        const errors = {};
-        let isValid = true;
-
-        if (name.length < 3) {
-            errors.name = "Activity name must be at least 3 characters long";
-            isValid = false;
-        }
-        if (maxCapacity < 1) {
-            errors.maxCapacity = "Max capacity must be at least 1 person";
-            isValid = false;
-        }
-
-        if (description.length < 5) {
-            errors.description =
-                "Description must be at least 5 characters long";
-            isValid = false;
-        }
-        if (discount > regularPrice) {
-            errors.discount = "Discount must be less than regular price";
-            isValid = false;
-        }
-
-        if (type.length < 3) {
-            errors.type = "Type of activity must be at least 3 characters long";
-            isValid = false;
-        }
-        !isValid && dispatch({ type: "errors", payload: errors });
-
-        return isValid;
-    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!isFormValid()) return;
+        if (!isFormValid(state, dispatch)) return;
 
         if (isEditForm) {
             editActivity({ newActivityData: state, id: activityToEdit.id });
