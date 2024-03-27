@@ -8,7 +8,7 @@ export function useActivity() {
         error,
     } = useQuery({
         queryKey: ["activities"],
-        queryFn: getActivities,
+        queryFn: getActivities, // async function that returns a promise
     });
 
     return { isPending, activities, error };
