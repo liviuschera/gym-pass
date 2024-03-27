@@ -48,9 +48,12 @@ function reducer(state, action) {
     }
 }
 
-function CreateActivityForm({ activityToEdit, isEditForm }) {
+function CreateActivityForm({ activityToEdit, isEditForm, onCloseModal }) {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const { isCreating, createActivity } = useCreateActivity(dispatch);
+    const { isCreating, createActivity } = useCreateActivity(
+        dispatch,
+        onCloseModal
+    );
     const { isEditing, editActivity } = useEditActivity();
     const [errors, setErrors] = useState({});
 
@@ -85,7 +88,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
         return <Spinner />;
     }
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} type={onCloseModal ? "modal" : "regular"}>
             <FormRow error={errors?.name} label="Activity name">
                 <Input
                     type="text"
@@ -187,7 +190,7 @@ function CreateActivityForm({ activityToEdit, isEditForm }) {
                 <Button
                     variation="secondary"
                     type="reset"
-                    onClick={() => dispatch({ type: "reset" })}
+                    onClick={() => onCloseModal?.()} //in order to reuse this form we conditionally call the function with optional chaining operator
                 >
                     Cancel
                 </Button>
