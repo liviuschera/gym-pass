@@ -2,8 +2,9 @@ import { useState } from "react";
 import Button from "../../ui/Button";
 import CreateActivityForm from "./CreateActivityForm";
 import Modal from "../../ui/Modal";
+import { HiPencil } from "react-icons/hi2";
 
-function EditActivity(activityToEdit) {
+function EditActivity({ activityToEdit }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
     return (
         <div>
@@ -11,12 +12,14 @@ function EditActivity(activityToEdit) {
                 size="small"
                 onClick={() => setIsOpenModal((show) => !show)}
             >
+                <HiPencil />
                 Edit
             </Button>
             {isOpenModal && (
                 <Modal
                     onClose={() => setIsOpenModal(false)}
                     activityToEdit={activityToEdit}
+                    isEditForm={true}
                 >
                     <CreateActivityForm
                         onCloseModal={() => setIsOpenModal(false)}

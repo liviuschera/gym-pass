@@ -16,7 +16,7 @@ function useOutsideClick(handler, listenCapturingPhase = true) {
                 handleClick,
                 listenCapturingPhase
             );
-    }, [handler]);
+    }, [handler, listenCapturingPhase]);
     return ref;
 }
 

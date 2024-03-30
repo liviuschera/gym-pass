@@ -58,10 +58,17 @@ const Button = styled.button`
 export default function Modal({
     children,
     onClose,
-    activityToEdit: { activityToEdit, isEditForm },
+    activityToEdit = {},
+    isEditForm = false,
 }) {
     // const ref = useRef();
     const ref = useOutsideClick(onClose);
+    console.log(
+        "from modal activityToEdit",
+        activityToEdit,
+        "isEditForm",
+        isEditForm
+    );
 
     return createPortal(
         <Overlay>
