@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const TableRow = styled.div`
     display: grid;
-    grid-template-columns: 0.6fr 1.8fr 2fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1.8fr 2fr 1fr 1fr 1fr 1fr 1fr;
     column-gap: 2.4rem;
     align-items: center;
-    padding: 1.4rem 2.4rem;
+    padding: 2rem 2.4rem;
     font-family: inherit;
 
     &:not(:last-child) {
@@ -15,7 +15,7 @@ export const TableRow = styled.div`
 
 export const Img = styled.img`
     display: block;
-    width: 6.4rem;
+    width: 9.4rem;
     aspect-ratio: 3 / 2;
     object-fit: cover;
     object-position: center;
