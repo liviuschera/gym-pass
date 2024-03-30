@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import CreateActivityForm from "./CreateActivityForm";
 import Modal from "../../ui/Modal";
 
-function AddCabin() {
+function AddActivity() {
     const [isOpenModal, setIsOpenModal] = useState(false);
     return (
         <div>
@@ -21,4 +21,4 @@ function AddCabin() {
     );
 }
 
-export default AddCabin;
+export default AddActivity;
