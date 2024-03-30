@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { useEffect } from "react";
 import { useRef } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
+import { cloneElement } from "react";
 
 const StyledModal = styled.div`
     position: fixed;
@@ -54,16 +55,27 @@ const Button = styled.button`
     }
 `;
 
-export default function Modal({ children, onClose }) {
+export default function Modal({
+    children,
+    onClose,
+    activityToEdit: { activityToEdit, isEditForm },
+}) {
     // const ref = useRef();
     const ref = useOutsideClick(onClose);
+
     return createPortal(
         <Overlay>
             <StyledModal ref={ref}>
                 <Button onClick={onClose}>
                     <HiXMark></HiXMark>
                 </Button>
-                <div>{children}</div>
+                <div>
+                    {/* pass props to children  */}
+                    {cloneElement(children, {
+                        activityToEdit,
+                        isEditForm,
+                    })}
+                </div>
             </StyledModal>
         </Overlay>,
         document.body

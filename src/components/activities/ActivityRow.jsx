@@ -12,10 +12,13 @@ import { formatCurrency } from "../../utils/helpers";
 import Button from "../../ui/Button";
 import CreateActivityForm from "./CreateActivityForm";
 import { useDeleteActivity } from "./useDeleteActivty";
+import Modal from "../../ui/Modal";
+import EditActivity from "./EditActivity";
 
 function ActivityRow({ activity }) {
     const [showForm, setShowForm] = useState(false);
     const { isDeleting, deleteActivity } = useDeleteActivity();
+    const [isOpenModal, setIsOpenModal] = useState(false);
 
     const {
         id: activityId,
@@ -61,13 +64,14 @@ function ActivityRow({ activity }) {
                     <span>&mdash;</span>
                 )}
                 <div>
-                    <Button
-                        // disabled={isDeleting}
-                        onClick={() => setShowForm((show) => !show)}
+                    <EditActivity activityToEdit={activity} isEditForm={true} />
+                    {/* <Button
+                        onClick={() => setIsOpenModal((show) => !show)}
+                        // onClick={() => setShowForm((show) => !show)}
                         size="small"
                     >
                         Edit
-                    </Button>
+                    </Button> */}
                     <Button
                         disabled={isDeleting}
                         onClick={() => deleteActivity(activityId)}
@@ -78,13 +82,21 @@ function ActivityRow({ activity }) {
                     </Button>
                 </div>
             </TableRow>
-            {showForm && (
+            {/* {showForm && (
                 <CreateActivityForm
                     activityToEdit={activity}
                     isEditForm={true}
                 />
-            )}
-            {}
+            )} */}
+            {/* {isOpenModal && (
+                <Modal onClose={() => setIsOpenModal(false)}>
+                    <CreateActivityForm
+                        onCloseModal={() => setIsOpenModal(false)}
+                        activityToEdit={activity}
+                        isEditForm={true}
+                    />
+                </Modal>
+            )} */}
         </>
     );
 }

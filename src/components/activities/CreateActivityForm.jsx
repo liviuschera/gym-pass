@@ -23,7 +23,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
-    console.log("ACTION: ", action, "STATE: ", state);
+    // console.log("ACTION: ", action, "STATE: ", state);
     switch (action.type) {
         case "name":
             return { ...state, name: action.payload };
@@ -39,7 +39,7 @@ function reducer(state, action) {
             return { ...state, image: action.payload };
         case "type":
             return { ...state, type: action.payload };
-        case "isEditForm":
+        case "isEdit":
             return { ...state, ...action.payload };
         case "reset":
             return initialState;
@@ -61,7 +61,7 @@ function CreateActivityForm({ activityToEdit, isEditForm, onCloseModal }) {
 
     // if isEditForm is true, set the state to the activityToEdit and use useEffect to listen to activityToEdit to prevent unnecessary (infinite) re-renders
     useEffect(() => {
-        dispatch({ type: "isEditForm", payload: activityToEdit });
+        dispatch({ type: "isEdit", payload: activityToEdit });
     }, [activityToEdit]);
 
     const { name, maxCapacity, regularPrice, discount, description, type } =
