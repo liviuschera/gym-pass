@@ -1,6 +1,5 @@
-import { useState } from "react";
 import {
-    TableRow,
+    // TableRow,
     Img,
     Description,
     Activity,
@@ -8,15 +7,12 @@ import {
     Discount,
     Price,
 } from "./activities.sytles";
+import { TableRow } from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
-import Button from "../../ui/Button";
-import { useDeleteActivity } from "./useDeleteActivty";
 import EditActivity from "./EditActivity";
 import DeleteActivity from "./DeleteActivity";
 
 function ActivityRow({ activity }) {
-    const { isDeleting, deleteActivity } = useDeleteActivity();
-
     const {
         id: activityId,
         image,
@@ -29,14 +25,15 @@ function ActivityRow({ activity }) {
     } = activity;
 
     function trimDescription() {
-        if (description.length > 55) {
-            return `${description.slice(0, 55)}` + "...";
+        const sliceLength = 65;
+        if (description.length > sliceLength) {
+            return `${description.slice(0, sliceLength)}` + "...";
         }
         return description;
     }
 
     return (
-        <TableRow role="row">
+        <TableRow role="row" columns="2fr 0.7fr 2.3fr 1fr 1fr 1fr 1fr 1fr">
             <Img src={image} alt={name} />
             <Activity>{name}</Activity>
             <Description>{trimDescription()}</Description>

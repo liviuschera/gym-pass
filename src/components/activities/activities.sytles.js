@@ -1,18 +1,5 @@
 import styled from "styled-components";
 
-export const TableRow = styled.div`
-    display: grid;
-    grid-template-columns: 2fr 1.8fr 2fr 1fr 1fr 1fr 1fr 1fr;
-    column-gap: 2.4rem;
-    align-items: center;
-    padding: 2rem 2.4rem;
-    font-family: inherit;
-
-    &:not(:last-child) {
-        border-bottom: 1px solid var(--color-grey-100);
-    }
-`;
-
 export const Img = styled.img`
     display: block;
     width: 9.4rem;
@@ -20,19 +7,21 @@ export const Img = styled.img`
     object-fit: cover;
     object-position: center;
     transform: scale(1.5) translateX(-7px);
+    margin: 0.5rem 0;
 `;
 
-export const Description = styled.div`
+export const Activity = styled.p`
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-grey-600);
+    justify-self: start;
+`;
+
+export const Description = styled.p`
     font-size: 1.1rem;
     color: var(--color-grey-500);
     line-height: 1.1;
     font-weight: 500;
-`;
-
-export const Activity = styled.div`
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--color-grey-600);
 `;
 
 export const Price = styled.div`
