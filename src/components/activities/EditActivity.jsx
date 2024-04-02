@@ -13,7 +13,6 @@ function EditActivity({ activityToEdit }) {
                 onClick={() => setIsOpenModal((show) => !show)}
             >
                 <HiPencil />
-                Edit
             </Button>
             {isOpenModal && (
                 <Modal

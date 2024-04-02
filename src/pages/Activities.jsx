@@ -1,11 +1,16 @@
 import Heading from "../ui/Heading";
 import ActivityTable from "../components/activities/ActivityTable";
 import AddActivity from "../components/activities/AddActivity";
+import Row from "../ui/Row";
+import ActivityTableOperations from "../components/activities/ActivityTableOperations";
 
 function Activities() {
     return (
         <>
-            <Heading>All activities</Heading>
+            <Row>
+                <Heading>All activities</Heading>
+                <ActivityTableOperations />
+            </Row>
             <ActivityTable />
             <AddActivity />
         </>

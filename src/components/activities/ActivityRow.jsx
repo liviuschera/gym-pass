@@ -27,13 +27,13 @@ function ActivityRow({ activity }) {
     function trimDescription() {
         const sliceLength = 65;
         if (description.length > sliceLength) {
-            return `${description.slice(0, sliceLength)}` + "...";
+            return `${description.slice(0, sliceLength)}`;
         }
         return description;
     }
 
     return (
-        <TableRow role="row" columns="2fr 0.7fr 2.3fr 1fr 1fr 1fr 1fr 1fr">
+        <TableRow role="row" columns="2fr 0.7fr 2.3fr 1fr 1fr 1fr 1fr 0.3fr">
             <Img src={image} alt={name} />
             <Activity>{name}</Activity>
             <Description>{trimDescription()}</Description>

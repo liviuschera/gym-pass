@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteActivity } from "./useDeleteActivty";
-import { HiPencil, HiTrash } from "react-icons/hi2";
+import { HiTrash } from "react-icons/hi2";
 
 function DeleteActivity({ activityId }) {
     const [isOpenModal, setIsOpenModal] = useState(false);
@@ -18,7 +18,6 @@ function DeleteActivity({ activityId }) {
                 }}
             >
                 <HiTrash />
-                Delete
             </Button>
             {isOpenModal && (
                 <Modal onClose={() => setIsOpenModal(false)}>
