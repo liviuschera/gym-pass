@@ -4,7 +4,14 @@ import TableOperations from "../../ui/TableOperations";
 function ActivityTableOperations() {
     return (
         <TableOperations>
-            <Filter />
+            <Filter
+                filterField="discount"
+                options={[
+                    { value: "all", label: "All" },
+                    { value: "with-discount", label: "With discount" },
+                    { value: "no-discount", label: "No discount" },
+                ]}
+            />
         </TableOperations>
     );
 }
