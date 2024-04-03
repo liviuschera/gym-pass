@@ -33,7 +33,7 @@ function ActivityRow({ activity }) {
     }
 
     return (
-        <TableRow role="row" columns="2fr 0.7fr 2.3fr 1fr 1fr 1fr 1fr 0.3fr">
+        <TableRow role="row" columns="2fr 1fr 2.3fr 1fr 1fr 1fr 1fr 0.3fr">
             <Img src={image} alt={name} />
             <Activity>{name}</Activity>
             <Description>{trimDescription()}</Description>
