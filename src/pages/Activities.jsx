@@ -1,8 +1,8 @@
 import Heading from "../ui/Heading";
-import ActivityTable from "../components/activities/ActivityTable";
-import AddActivity from "../components/activities/AddActivity";
+import ActivityTable from "../features/activities/ActivityTable";
+import AddActivity from "../features/activities/AddActivity";
 import Row from "../ui/Row";
-import ActivityTableOperations from "../components/activities/ActivityTableOperations";
+import ActivityTableOperations from "../features/activities/ActivityTableOperations";
 
 function Activities() {
     return (

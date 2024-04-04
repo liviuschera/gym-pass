@@ -1,7 +1,7 @@
 import { useActivity } from "./useActivity";
 import Spinner from "../../ui/Spinner";
 import ActivityRow from "./ActivityRow";
-import { Table, TableBody, TableHeader } from "../../ui/Table";
+import { Empty, Table, TableBody, TableHeader } from "../../ui/Table";
 import { useSearchParams } from "react-router-dom";
 
 function ActivityTable() {
@@ -10,6 +10,10 @@ function ActivityTable() {
 
     if (isPending) {
         return <Spinner />;
+    }
+
+    if (!activities.length) {
+        return <Empty>No activities found.</Empty>;
     }
     // //////////////////////////////////////
     // FILTERING
@@ -109,7 +113,6 @@ function ActivityTable() {
                 <div>Max Capacity</div>
                 <div>Regular Price</div>
                 <div>Discount</div>
-                {/* <div>Delete</div> */}
             </TableHeader>
             <TableBody>
                 {sortedActivities.map((activity) => {
