@@ -1,6 +1,7 @@
 // import BookingRow from "./BookingRow";
 import Spinner from "../../ui/Spinner";
 import { Table, TableBody, TableHeader } from "../../ui/Table";
+import BookingRow from "./BookingRow";
 import { useBookings } from "./useBookings";
 
 function BookingTable() {
@@ -9,14 +10,10 @@ function BookingTable() {
     if (isPending) return <Spinner />;
     return (
         <Table>
-            <TableHeader
-                role="row"
-                as="header"
-                columns="1fr 1fr 1fr 1fr 1fr 1fr"
-            >
+            <TableHeader role="row" as="header" columns="1fr 2fr 1fr 1fr 1fr">
                 <div>Activity</div>
-                <div>Type</div>
-                <div>Dates</div>
+                <div>Participant</div>
+                <div>Date/Time</div>
                 <div>Status</div>
                 <div>Amount</div>
                 <div></div>
@@ -24,7 +21,8 @@ function BookingTable() {
 
             <TableBody>
                 {bookings.map((booking) => {
-                    console.log(booking);
+                    // console.log(booking);
+                    return <BookingRow key={booking.id} booking={booking} />;
                 })}
             </TableBody>
         </Table>
