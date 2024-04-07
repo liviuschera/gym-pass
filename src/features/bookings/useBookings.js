@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBookings } from "../../services/APIbookings";
+import { getBookings } from "../../services/APIbookings.js";
 
 export function useBookings() {
     const {
