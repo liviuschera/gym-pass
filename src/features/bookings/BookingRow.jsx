@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-import Tag from "../../ui/Tag";
 import { TableRow } from "../../ui/Table";
 
-import { formatCurrency } from "../../utils/helpers";
-import Spinner from "../../ui/Spinner";
+import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
+import { format, isToday } from "date-fns";
+import DisplayStatus from "./DisplayStatus";
 
 const Activity = styled.div`
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--color-grey-600);
-    font-family: "Iosevka", monospace;
+    /* font-family: "Iosevka", monospace; */
 `;
 
 const Stacked = styled.div`
@@ -26,11 +26,6 @@ const Stacked = styled.div`
         color: var(--color-grey-500);
         font-size: 1.2rem;
     }
-`;
-
-const Amount = styled.div`
-    font-family: "Iosevka", monospace;
-    font-weight: 500;
 `;
 
 function BookingRow({
@@ -55,18 +50,11 @@ function BookingRow({
         },
     },
 }) {
-    const statusToTagName = {
-        unconfirmed: "blue",
-        "checked-in": "green",
-        paid: "green",
-        unpaid: "red",
-        guest: "silver",
-        yellow: "yellow",
-    };
-    // console.log(firstName);
     // if (!bookingId) return <Spinner />;
+
     return (
         <TableRow role="row" columns="1fr 2fr 1fr 1fr 1fr">
+            {/* DISPLAY ACTIVITY DETAILS */}
             <Stacked>
                 <Activity>{activityName}</Activity>
                 <span>
@@ -74,21 +62,40 @@ function BookingRow({
                 </span>
             </Stacked>
 
+            {/* DISPLAY  MEMBER DETAILS */}
             <Stacked>
                 <span>
                     {memberFirstName}&nbsp;{memberLastName} &nbsp;
                     {noShows > 0 && (
-                        <Tag type={statusToTagName["yellow"]}>
+                        <DisplayStatus status={"noShows"}>
                             {`No shows: ${noShows}`}
-                        </Tag>
+                        </DisplayStatus>
                     )}
                 </span>
                 <span>{email}</span>
             </Stacked>
-            <span>{bookedInDateTime}</span>
-            <Tag type={statusToTagName[status]}>{status.replace("-", " ")}</Tag>
 
-            <Amount>{formatCurrency(regularPrice)}</Amount>
+            {/* DISPLAY BOOKED IN DATE AND TIME */}
+            <Stacked>
+                <span>
+                    {isToday(new Date(bookedInDateTime))
+                        ? "Today"
+                        : formatDistanceFromNow(bookedInDateTime)}
+                </span>
+                <span>
+                    {format(new Date(bookedInDateTime), "MMM dd yyyy HH:mm")}
+                </span>
+            </Stacked>
+
+            {/* DISPLAY BOOKING STATUS */}
+            <DisplayStatus status={status}>
+                {status.replace("-", " ")}
+            </DisplayStatus>
+
+            {/* DISPLAY PAYMENT STATUS */}
+            <DisplayStatus status={regularPrice} paymentStatus={paymentStatus}>
+                {formatCurrency(regularPrice)}
+            </DisplayStatus>
         </TableRow>
     );
 }
