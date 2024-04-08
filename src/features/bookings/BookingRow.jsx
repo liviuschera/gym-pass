@@ -35,19 +35,14 @@ function BookingRow({
         paymentStatus,
         isGuest,
         bookedInDateTime,
-        status,
+        bookingStatus,
         members: {
             firstName: memberFirstName,
             lastName: memberLastName,
             noShows,
             email,
         },
-        activities: {
-            name: activityName,
-            bookedInSpots,
-            maxCapacity,
-            regularPrice,
-        },
+        activities: { name: activityName, maxCapacity, regularPrice },
     },
 }) {
     // if (!bookingId) return <Spinner />;
@@ -57,9 +52,7 @@ function BookingRow({
             {/* DISPLAY ACTIVITY DETAILS */}
             <Stacked>
                 <Activity>{activityName}</Activity>
-                <span>
-                    {bookedInSpots} / {maxCapacity}
-                </span>
+                <span>Max capacity: {maxCapacity}</span>
             </Stacked>
 
             {/* DISPLAY  MEMBER DETAILS */}
@@ -88,8 +81,8 @@ function BookingRow({
             </Stacked>
 
             {/* DISPLAY BOOKING STATUS */}
-            <DisplayStatus status={status}>
-                {status.replace("-", " ")}
+            <DisplayStatus status={bookingStatus}>
+                {bookingStatus.replace("-", " ")}
             </DisplayStatus>
 
             {/* DISPLAY PAYMENT STATUS */}

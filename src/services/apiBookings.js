@@ -4,7 +4,7 @@ export async function getBookings() {
     let { data, error } = await supabase
         .from("bookings")
         .select(
-            "id, createdAt, paymentStatus, status, isGuest,bookedInDateTime, activities (name, bookedInSpots, maxCapacity, regularPrice), members (firstName, lastName, email, noShows)"
+            "id, createdAt, paymentStatus, bookingStatus, isGuest,bookedInDateTime, activities (name, maxCapacity, regularPrice), members (firstName, lastName, email, noShows)"
         );
 
     if (error) {
