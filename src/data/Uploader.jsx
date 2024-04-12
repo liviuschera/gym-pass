@@ -2,18 +2,10 @@ import { useState } from "react";
 import { isFuture, isPast, isToday } from "date-fns";
 import supabase from "../services/supabase";
 import Button from "../ui/Button";
-import { subtractDates } from "../utils/helpers";
 
 import { bookings } from "./data-bookings";
 import { activities } from "./data-activities";
 import { members } from "./data-members";
-
-// const originalSettings = {
-//   minBookingLength: 3,
-//   maxBookingLength: 30,
-//   maxMembersPerBooking: 10,
-//   breakfastPrice: 15,
-// };
 
 async function deleteMembers() {
     const { error } = await supabase.from("members").delete().gt("id", 0);
@@ -46,52 +38,29 @@ async function createBookings() {
         .from("members")
         .select("id")
         .order("id");
-    const allGuestIds = membersIds.map((activity) => activity.id);
+    const allMemberIds = membersIds.map((member) => member.id);
     const { data: activitiesIds } = await supabase
         .from("activities")
         .select("id")
         .order("id");
-    const allCabinIds = activitiesIds.map((activity) => activity.id);
+    const allActivityIds = activitiesIds.map((activity) => activity.id);
 
     const finalBookings = bookings.map((booking) => {
         // Here relying on the order of activities, as they don't have and ID yet
-        const activity = activities.at(booking.activityId - 1);
-        const numNights = subtractDates(booking.endDate, booking.startDate);
-        const activityPrice =
-            numNights * (activity.regularPrice - activity.discount);
-        const extrasPrice = booking.hasBreakfast
-            ? numNights * 15 * booking.numMembers
-            : 0; // hardcoded breakfast price
-        const totalPrice = activityPrice + extrasPrice;
+        // const activity = activities.at(booking.activityId - 1);
 
-        let status;
-        if (
-            isPast(new Date(booking.endDate)) &&
-            !isToday(new Date(booking.endDate))
-        )
-            status = "checked-out";
-        if (
-            isFuture(new Date(booking.startDate)) ||
-            isToday(new Date(booking.startDate))
-        )
-            status = "unconfirmed";
-        if (
-            (isFuture(new Date(booking.endDate)) ||
-                isToday(new Date(booking.endDate))) &&
-            isPast(new Date(booking.startDate)) &&
-            !isToday(new Date(booking.startDate))
-        )
-            status = "checked-in";
+        // const activityPrice = activity.regularPrice - activity.discount;
+
+        let bookingStatus;
+        console.log(allActivityIds);
+
+        bookingStatus = Math.random() > 0.5 ? "unconfirmed" : "checked-in";
 
         return {
             ...booking,
-            numNights,
-            activityPrice,
-            extrasPrice,
-            totalPrice,
-            memberId: allGuestIds.at(booking.memberId - 1),
-            activityId: allCabinIds.at(booking.activityId - 1),
-            status,
+            bookingStatus,
+            memberId: allMemberIds.at(booking.memberId - 1),
+            activityId: allActivityIds.at(booking.activityId - 1),
         };
     });
 
@@ -130,7 +99,7 @@ function Uploader() {
         <div
             style={{
                 marginTop: "auto",
-                backgroundColor: "#e0e7ff",
+                backgroundColor: "#d1fae5",
                 padding: "8px",
                 borderRadius: "5px",
                 textAlign: "center",

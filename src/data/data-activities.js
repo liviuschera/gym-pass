@@ -25,8 +25,8 @@ export const activities = [
     },
     {
         name: "BODYCOMBAT",
-        maxCapacity: 4,
-        regularPrice: 300,
+        maxCapacity: 60,
+        regularPrice: 0,
         discount: 0,
         type: "Class",
         image: imageUrl + "cabin-003.jpg",

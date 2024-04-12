@@ -1,6 +1,6 @@
 import Tag from "../../ui/Tag";
 
-function DisplayStatus({ status, paymentStatus = "", children }) {
+function DisplayStatus({ status, children }) {
     const statusToTagName = {
         unconfirmed: "blue",
         "checked-in": "green",
@@ -13,8 +13,8 @@ function DisplayStatus({ status, paymentStatus = "", children }) {
 
     if (status === 0) {
         return <Tag type={statusToTagName["free"]}>{"free"}</Tag>;
-    } else if (status > 0 && paymentStatus !== "") {
-        return <Tag type={statusToTagName[paymentStatus]}>{children}</Tag>;
+    } else if (status > 0) {
+        return <Tag type={statusToTagName["unpaid"]}>{children}</Tag>;
     }
 
     return <Tag type={statusToTagName[status]}>{children}</Tag>;

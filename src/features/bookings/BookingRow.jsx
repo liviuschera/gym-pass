@@ -32,7 +32,6 @@ function BookingRow({
     booking: {
         id: bookingId,
         createdAt,
-        paymentStatus,
         isGuest,
         bookedInDateTime,
         bookingStatus,
@@ -86,7 +85,7 @@ function BookingRow({
             </DisplayStatus>
 
             {/* DISPLAY PAYMENT STATUS */}
-            <DisplayStatus status={regularPrice} paymentStatus={paymentStatus}>
+            <DisplayStatus status={regularPrice}>
                 {formatCurrency(regularPrice)}
             </DisplayStatus>
         </TableRow>
