@@ -49,16 +49,17 @@ async function createBookings() {
         // Here relying on the order of activities, as they don't have and ID yet
         // const activity = activities.at(booking.activityId - 1);
 
-        // const activityPrice = activity.regularPrice - activity.discount;
+        // console.log(activitiesIds);
 
-        let bookingStatus;
-        console.log(allActivityIds);
+        const bookingStatus =
+            Math.random() > 0.5 ? "unconfirmed" : "checked-in";
 
-        bookingStatus = Math.random() > 0.5 ? "unconfirmed" : "checked-in";
+        const isPaid = Math.random() > 0.5 ? true : false;
 
         return {
             ...booking,
             bookingStatus,
+            isPaid,
             memberId: allMemberIds.at(booking.memberId - 1),
             activityId: allActivityIds.at(booking.activityId - 1),
         };

@@ -33,6 +33,7 @@ function BookingRow({
         id: bookingId,
         createdAt,
         isGuest,
+        isPaid,
         bookedInDateTime,
         bookingStatus,
         members: {
@@ -41,7 +42,7 @@ function BookingRow({
             noShows,
             email,
         },
-        activities: { name: activityName, maxCapacity, regularPrice },
+        activities: { name: activityName, maxCapacity, regularPrice, discount },
     },
 }) {
     // if (!bookingId) return <Spinner />;
@@ -85,8 +86,11 @@ function BookingRow({
             </DisplayStatus>
 
             {/* DISPLAY PAYMENT STATUS */}
-            <DisplayStatus status={regularPrice}>
-                {formatCurrency(regularPrice)}
+            <DisplayStatus
+                status={regularPrice}
+                paymentStatus={isPaid ? "paid" : "unpaid"}
+            >
+                {formatCurrency(regularPrice - discount)}
             </DisplayStatus>
         </TableRow>
     );
