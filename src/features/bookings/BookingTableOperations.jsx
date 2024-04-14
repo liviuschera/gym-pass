@@ -19,24 +19,36 @@ function BookingTableOperations() {
             <SortBy
                 options={[
                     {
+                        value: "name-asc",
+                        label: "Sort by activity name (ascending)",
+                    },
+                    {
                         value: "name-desc",
+                        label: "Sort by activity name (descending)",
+                    },
+                    {
+                        value: "lastName-asc",
+                        label: "Sort by participant name (ascending)",
+                    },
+                    {
+                        value: "lastName-desc",
+                        label: "Sort by participant name (descending)",
+                    },
+                    {
+                        value: "bookedInDateTime-asc",
                         label: "Sort by date (sooner first)",
                     },
                     {
                         value: "bookedInDateTime-desc",
-                        label: "Sort by date (sooner first)",
-                    },
-                    {
-                        value: "bookedInDateTime-asc",
                         label: "Sort by date (later first)",
                     },
                     {
-                        value: "totalPrice-desc",
-                        label: "Sort by amount (high first)",
+                        value: "regularPrice-asc",
+                        label: "Sort by regular price (low first)",
                     },
                     {
-                        value: "totalPrice-asc",
-                        label: "Sort by amount (low first)",
+                        value: "regularPrice-desc",
+                        label: "Sort by regular price (high first)",
                     },
                 ]}
             />

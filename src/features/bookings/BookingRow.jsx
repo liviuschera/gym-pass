@@ -36,12 +36,7 @@ function BookingRow({
         isPaid,
         bookedInDateTime,
         bookingStatus,
-        members: {
-            firstName: memberFirstName,
-            lastName: memberLastName,
-            noShows,
-            email,
-        },
+        members: { firstName, lastName, noShows, email },
         activities: { name: activityName, maxCapacity, regularPrice, discount },
     },
 }) {
@@ -58,7 +53,7 @@ function BookingRow({
             {/* DISPLAY  MEMBER DETAILS */}
             <Stacked>
                 <span>
-                    {memberFirstName}&nbsp;{memberLastName} &nbsp;
+                    {lastName}&#44;&nbsp;{firstName} &nbsp;
                     {noShows > 0 && (
                         <DisplayStatus status={"noShows"}>
                             {`No shows: ${noShows}`}

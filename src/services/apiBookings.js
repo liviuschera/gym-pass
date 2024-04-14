@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export async function getBookings({ filter }) {
+export async function getBookings({ filter, sortBy }) {
     let query = supabase
         .from("bookings")
         .select(
@@ -8,8 +8,25 @@ export async function getBookings({ filter }) {
         );
 
     // FILTER
-    if (filter !== null) {
+    if (filter) {
         query = query.eq(filter.field, filter.value);
+    }
+
+    // SORT
+    if (sortBy) {
+        let field;
+        if (sortBy.field === "lastName") {
+            field = "members(lastName)";
+        } else if (sortBy.field === "name" || sortBy.field === "regularPrice") {
+            field = `activities(${sortBy.field})`;
+        } else {
+            field = sortBy.field;
+        }
+
+        query = query.order(field, {
+            // referencedTable: referencedTable,
+            ascending: sortBy.direction === "asc",
+        });
     }
 
     const { data, error } = await query;
