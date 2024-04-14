@@ -86,10 +86,7 @@ function BookingRow({
             </DisplayStatus>
 
             {/* DISPLAY PAYMENT STATUS */}
-            <DisplayStatus
-                status={regularPrice}
-                paymentStatus={isPaid ? "paid" : "unpaid"}
-            >
+            <DisplayStatus status={regularPrice} isPaid={isPaid}>
                 {formatCurrency(regularPrice - discount)}
             </DisplayStatus>
         </TableRow>
