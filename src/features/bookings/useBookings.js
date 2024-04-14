@@ -28,7 +28,7 @@ export function useBookings() {
     // SORT
     // ////////////////////////////////////////
 
-    const sortValue = searchParams.get("sortBy") || "lastName-asc";
+    const sortValue = searchParams.get("sortBy") || "name-asc";
     const [field, direction] = sortValue.split("-");
     const sortBy = !sortValue ? null : { field, direction };
 
