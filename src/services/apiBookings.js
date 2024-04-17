@@ -24,7 +24,6 @@ export async function getBookings({ filter, sortBy }) {
         }
 
         query = query.order(field, {
-            // referencedTable: referencedTable,
             ascending: sortBy.direction === "asc",
         });
     }

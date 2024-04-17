@@ -1,6 +1,7 @@
 // import BookingRow from "./BookingRow";
+import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
-import { Table, TableBody, TableHeader } from "../../ui/Table";
+import { Footer, Table, TableBody, TableHeader } from "../../ui/Table";
 import BookingRow from "./BookingRow";
 import { useBookings } from "./useBookings";
 
@@ -25,6 +26,9 @@ function BookingTable() {
                     return <BookingRow key={booking.id} booking={booking} />;
                 })}
             </TableBody>
+            <Footer>
+                <Pagination />
+            </Footer>
         </Table>
     );
 }
