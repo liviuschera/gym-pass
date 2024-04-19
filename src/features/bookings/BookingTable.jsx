@@ -2,17 +2,18 @@
 import { useSearchParams } from "react-router-dom";
 import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
-import { Footer, Table, TableBody, TableHeader } from "../../ui/Table";
+import { Empty, Footer, Table, TableBody, TableHeader } from "../../ui/Table";
 import BookingRow from "./BookingRow";
 import { useBookings } from "./useBookings";
 
 function BookingTable() {
-    const { bookings, isPending } = useBookings();
+    const { bookings, count, isPending } = useBookings();
     const [searchParams] = useSearchParams();
-    // const pageCount
-    console.log(searchParams);
 
+    console.log(searchParams);
     if (isPending) return <Spinner />;
+    if (!bookings.length) return <Empty>No bookings can be found.</Empty>;
+
     return (
         <Table>
             <TableHeader role="row" as="header" columns="1fr 2fr 1fr 1fr 1fr">
@@ -31,7 +32,7 @@ function BookingTable() {
                 })}
             </TableBody>
             <Footer>
-                <Pagination count={bookings.length} />
+                <Pagination count={count} />
             </Footer>
         </Table>
     );

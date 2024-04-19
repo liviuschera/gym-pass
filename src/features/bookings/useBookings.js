@@ -5,7 +5,7 @@ import { useSearchParams } from "react-router-dom";
 // NOTE: implement API-side of filtering to improve performance, to reduce the data transfer over the network as bookings table will keep growing
 export function useBookings() {
     const [searchParams] = useSearchParams();
-    console.log(searchParams);
+    // console.log(searchParams);
 
     // //////////////////////////////////////////
     // FILTER
@@ -32,14 +32,23 @@ export function useBookings() {
     const [field, direction] = sortValue.split("-");
     const sortBy = !sortValue ? null : { field, direction };
 
+    // //////////////////////////////////////////
+    // PAGINATION
+    // ////////////////////////////////////////
+
+    const page = Number(searchParams.get("page")) || 1;
+
     const {
         isPending,
-        data: bookings,
+        data: { data: bookings, count }, // initially data is undefined so we will use placeholderData to avoid error in console log
+
+        // data: { data: bookings, count } ={},  // initially data is undefined so we need to set it to an empty object to avoid error in console log when data is null or undefined (see https://react-query.tanstack.com/guides/queries)
         error,
     } = useQuery({
-        queryKey: ["bookings", filter, sortBy],
-        queryFn: () => getBookings({ filter, sortBy }), // async function that returns a promise
+        queryKey: ["bookings", filter, sortBy, page],
+        queryFn: () => getBookings({ filter, sortBy, page }), // async function that returns a promise
+        placeholderData: { data: [], count: 0 },
     });
 
-    return { isPending, bookings, error };
+    return { isPending, error, bookings, count };
 }
