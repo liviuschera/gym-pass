@@ -1,10 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
 import { getBookings } from "../../services/apiBookings";
 import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../../utils/constants";
 
 // NOTE: implement API-side of filtering to improve performance, to reduce the data transfer over the network as bookings table will keep growing
 export function useBookings() {
     const [searchParams] = useSearchParams();
+    const queryClient = useQueryClient();
     // console.log(searchParams);
 
     // //////////////////////////////////////////
@@ -38,6 +40,9 @@ export function useBookings() {
 
     const page = Number(searchParams.get("page")) || 1;
 
+    // //////////////////////////////////////////
+    // QUERY
+    // ////////////////////////////////////////
     const {
         isPending,
         data: { data: bookings, count }, // initially data is undefined so we will use placeholderData to avoid error in console log
@@ -47,6 +52,20 @@ export function useBookings() {
     } = useQuery({
         queryKey: ["bookings", filter, sortBy, page],
         queryFn: () => getBookings({ filter, sortBy, page }), // async function that returns a promise
+        placeholderData: { data: [], count: 0 },
+    });
+
+    // //////////////////////////////////////////
+    // PREFETCHING
+    // ////////////////////////////////////////
+    const pageCount = Math.ceil(count / PAGE_SIZE);
+    let operation;
+    if (page < pageCount) operation = page + 1;
+    if (page > 1) operation = page - 1;
+
+    queryClient.prefetchQuery({
+        queryKey: ["bookings", filter, sortBy, operation],
+        queryFn: () => getBookings({ filter, sortBy, page: operation }), // async function that returns a promise
         placeholderData: { data: [], count: 0 },
     });
 
