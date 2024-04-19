@@ -39,7 +39,10 @@ function Filter({ filterField, options }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const currentValue = searchParams.get(filterField) || options.at(0).value;
 
+    const page = searchParams.get("page");
     function handleClick(value) {
+        if (page) searchParams.delete("page"); // to prevent error with range query in supabase when changing filter options.
+
         searchParams.set(filterField, value); // set the state (the name of the field in the URL) with the value
         setSearchParams(searchParams);
     }

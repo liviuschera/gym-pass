@@ -34,8 +34,9 @@ export async function getBookings({ filter, sortBy, page }) {
 
     // PAGINATION
     if (page) {
+        // NOTE: API-side of pagination
         const from = (page - 1) * PAGE_SIZE;
-        const to = from + PAGE_SIZE - 1;
+        const to = page * PAGE_SIZE - 1;
         query = query.range(from, to);
     }
 
