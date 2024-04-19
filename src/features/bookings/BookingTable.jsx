@@ -1,4 +1,5 @@
 // import BookingRow from "./BookingRow";
+import { useSearchParams } from "react-router-dom";
 import Pagination from "../../ui/Pagination";
 import Spinner from "../../ui/Spinner";
 import { Footer, Table, TableBody, TableHeader } from "../../ui/Table";
@@ -7,6 +8,9 @@ import { useBookings } from "./useBookings";
 
 function BookingTable() {
     const { bookings, isPending } = useBookings();
+    const [searchParams] = useSearchParams();
+    // const pageCount
+    console.log(searchParams);
 
     if (isPending) return <Spinner />;
     return (
@@ -27,7 +31,7 @@ function BookingTable() {
                 })}
             </TableBody>
             <Footer>
-                <Pagination />
+                <Pagination count={bookings.length} />
             </Footer>
         </Table>
     );
