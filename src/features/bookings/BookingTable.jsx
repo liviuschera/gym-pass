@@ -16,7 +16,11 @@ function BookingTable() {
 
     return (
         <Table>
-            <TableHeader role="row" as="header" columns="1fr 2fr 1fr 1fr 1fr">
+            <TableHeader
+                role="row"
+                as="header"
+                columns="1fr 3fr 1.5fr 1fr 1fr 0.3fr"
+            >
                 <div>Activity</div>
                 <div>Participant</div>
                 <div>Date/Time</div>

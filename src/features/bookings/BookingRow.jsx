@@ -5,6 +5,14 @@ import { TableRow } from "../../ui/Table";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 import { format, isToday } from "date-fns";
 import DisplayStatus from "./DisplayStatus";
+import {
+    HiEye,
+    HiInformationCircle,
+    HiOutlineInformationCircle,
+    HiPencil,
+} from "react-icons/hi2";
+import Button from "../../ui/Button";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Activity = styled.div`
     font-size: 1.6rem;
@@ -40,10 +48,11 @@ function BookingRow({
         activities: { name: activityName, maxCapacity, regularPrice, discount },
     },
 }) {
+    const navigate = useNavigate();
     // if (!bookingId) return <Spinner />;
 
     return (
-        <TableRow role="row" columns="1fr 2fr 1fr 1fr 1fr">
+        <TableRow role="row" columns="1fr 3fr 1.5fr 1fr 1fr 0.3fr">
             {/* DISPLAY ACTIVITY DETAILS */}
             <Stacked>
                 <Activity>{activityName}</Activity>
@@ -84,6 +93,17 @@ function BookingRow({
             <DisplayStatus status={regularPrice} isPaid={isPaid}>
                 {formatCurrency(regularPrice - discount)}
             </DisplayStatus>
+            {/* DISPLAY BOOKING ID */}
+            <Button
+                size="small"
+                variation="info"
+                onClick={() => navigate(`/bookings/${bookingId}`)}
+            >
+                <HiOutlineInformationCircle
+                    size={21}
+                    style={{ margin: "0.1rem" }}
+                />
+            </Button>
         </TableRow>
     );
 }

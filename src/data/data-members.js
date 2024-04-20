@@ -84,7 +84,7 @@ export const members = [
         firstName: "Rebecka",
         lastName: "Maggio",
         email: "rebecka.maggio@email.com",
-        gender: "Agender",
+        gender: "Female",
         phoneNumber: "+964 (316) 451-2034 x0181",
         dateOfBirth: "1985-04-12",
         noShows: 1,
