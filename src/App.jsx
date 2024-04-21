@@ -36,6 +36,10 @@ function App() {
                             element={<Navigate replace to="/dashboard" />}
                         />
                         <Route path="/bookings" element={<Bookings />} />
+                        {/* <Route
+                            path="/bookings/:bookingId"
+                            element={<Booking />}
+                        /> */}
                         <Route path="/activities" element={<Activities />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/members" element={<Members />} />
@@ -43,7 +47,6 @@ function App() {
                     </Route>
                     <Route path="/login" element={<Login />} />
                     <Route path="/account" element={<Account />} />
-                    <Route path="/bookings/:bookingId" element={<Booking />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
