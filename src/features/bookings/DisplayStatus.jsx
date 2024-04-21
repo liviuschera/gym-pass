@@ -10,7 +10,7 @@ function DisplayStatus({ status, isPaid, children }) {
         noShows: "yellow",
         free: "silver",
     };
-    console.log(status, isPaid);
+
     isPaid = isPaid ? "paid" : "unpaid";
     status = status === 0 ? "free" : status;
 

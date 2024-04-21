@@ -17,7 +17,7 @@ function BookingDetails() {
     const moveBack = useMoveBack();
     const { booking, isPending } = useBooking();
     // const { id: bookingId, bookingStatus } = booking;
-    console.log(booking);
+    // console.log(booking);
 
     if (isPending) return <Spinner />;
 
