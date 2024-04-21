@@ -49,7 +49,6 @@ function BookingRow({
     },
 }) {
     const navigate = useNavigate();
-    // if (!bookingId) return <Spinner />;
 
     return (
         <TableRow role="row" columns="1fr 3fr 1.5fr 1fr 1fr 0.3fr">

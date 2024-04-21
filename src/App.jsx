@@ -13,6 +13,7 @@ import { Navigate } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Settings from "./pages/Settings";
 import { Toaster } from "react-hot-toast";
+import Booking from "./pages/Booking";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -35,6 +36,10 @@ function App() {
                             element={<Navigate replace to="/dashboard" />}
                         />
                         <Route path="/bookings" element={<Bookings />} />
+                        <Route
+                            path="/bookings/:bookingId"
+                            element={<Booking />}
+                        />
                         <Route path="/activities" element={<Activities />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/members" element={<Members />} />

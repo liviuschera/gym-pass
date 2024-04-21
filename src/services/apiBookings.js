@@ -48,3 +48,16 @@ export async function getBookings({ filter, sortBy, page }) {
     }
     return { data, count };
 }
+
+export async function getBooking(id) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .select("*, members(*), activities(*))")
+        .eq("id", id)
+        .single();
+    if (error) {
+        console.error(error);
+        throw new Error("Error fetching booking");
+    }
+    return data;
+}
