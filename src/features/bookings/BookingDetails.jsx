@@ -6,6 +6,7 @@ import DisplayStatus from "./DisplayStatus";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
+import ButtonText from "../../ui/ButtonText";
 
 const HeadingGroup = styled.div`
     display: flex;
@@ -15,19 +16,20 @@ const HeadingGroup = styled.div`
 function BookingDetails() {
     const moveBack = useMoveBack();
     const { booking, isPending } = useBooking();
-    const { id: bookingId, bookingStatus } = booking;
+    // const { id: bookingId, bookingStatus } = booking;
+    console.log(booking);
 
     if (isPending) return <Spinner />;
 
     return (
         <Row>
             <HeadingGroup>
-                <Heading as="h1">Booking #{bookingId}</Heading>
-                <DisplayStatus type={bookingStatus}>
-                    {bookingStatus.replace("-", " ")}
+                <Heading as="h1">Booking #{booking.id}</Heading>
+                <DisplayStatus type={booking.bookingStatus}>
+                    {booking.bookingStatus.replace("-", " ")}
                 </DisplayStatus>
             </HeadingGroup>
-            <Button onClick={moveBack}>&larr; Back</Button>
+            <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
         </Row>
     );
 }
