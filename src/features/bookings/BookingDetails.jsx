@@ -25,7 +25,7 @@ function BookingDetails() {
         <Row>
             <HeadingGroup>
                 <Heading as="h1">Booking #{booking.id}</Heading>
-                <DisplayStatus type={booking.bookingStatus}>
+                <DisplayStatus status={booking.bookingStatus.toLowerCase()}>
                     {booking.bookingStatus.replace("-", " ")}
                 </DisplayStatus>
             </HeadingGroup>
