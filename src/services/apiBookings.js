@@ -61,3 +61,16 @@ export async function getBooking(id) {
     }
     return data;
 }
+
+export async function getBookingsByActivityAndDate({ activityId, date }) {
+    const { data, error, count } = await supabase
+        .from("bookings")
+        .select("*", { count: "exact" })
+        .match({ activityId: activityId, bookedInDateTime: date });
+
+    if (error) {
+        console.error(error);
+        throw new Error("Error fetching bookings with activityId and date");
+    }
+    return { data, count };
+}

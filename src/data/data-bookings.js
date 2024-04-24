@@ -17,7 +17,7 @@ function fromToday(days, hours, minutes) {
 export const bookings = [
     // BODYPUMP
     {
-        bookedInDateTime: fromToday(2, 12, 0),
+        bookedInDateTime: fromToday(1, 18, 30),
         bookingStatus: "checked-in",
         isGuest: false,
         isPaid: true,
@@ -81,7 +81,7 @@ export const bookings = [
         isPaid: true,
         activityId: 3,
         memberId: 8,
-        observations: "Recovering from an injury. Needs to be toned down.",
+        observations: "Recovering from an injury. Needs to be supervised.",
     },
     {
         bookedInDateTime: fromToday(2, 17, 0),
@@ -104,7 +104,7 @@ export const bookings = [
 
     //  Yoga
     {
-        bookedInDateTime: fromToday(2, 9, 0),
+        bookedInDateTime: fromToday(1, 18, 30),
         bookingStatus: "checked-in",
         isGuest: false,
         isPaid: false,
@@ -113,7 +113,7 @@ export const bookings = [
         observations: "Will bring their own mat.",
     },
     {
-        bookedInDateTime: fromToday(2, 17, 0),
+        bookedInDateTime: fromToday(1, 18, 30),
         bookingStatus: "",
         isGuest: false,
         isPaid: false,
@@ -139,7 +139,7 @@ export const bookings = [
         isPaid: false,
         activityId: 5,
         memberId: 14,
-        observations: "Requested an instructor for private class.",
+        observations: "Requested an instructor for private session.",
     },
     {
         bookedInDateTime: fromToday(0, 8, 0),
