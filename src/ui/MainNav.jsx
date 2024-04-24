@@ -6,7 +6,7 @@ import {
     HiOutlineCog6Tooth,
     HiOutlineUsers,
 } from "react-icons/hi2";
-import { GrYoga } from "react-icons/gr";
+import { PiPersonSimpleRunDuotone } from "react-icons/pi";
 
 const NavList = styled.ul`
     display: flex;
@@ -77,7 +77,7 @@ function MainNav() {
                 </li>
                 <li>
                     <StyledNavLink to="/activities">
-                        <GrYoga />
+                        <PiPersonSimpleRunDuotone />
                         <span>Activities</span>
                     </StyledNavLink>
                 </li>

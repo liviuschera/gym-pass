@@ -10,7 +10,7 @@ export function useBooking() {
         data: booking,
         error,
     } = useQuery({
-        queryKey: ["booking"],
+        queryKey: ["booking", bookingId], // add the bookingId to the query key array to trigger the query
         queryFn: () => getBooking(bookingId), // async function that returns a promise
     });
 
