@@ -8,9 +8,9 @@ import { useBookings } from "./useBookings";
 
 function BookingTable() {
     const { bookings, count, isPending } = useBookings();
-    const [searchParams] = useSearchParams();
+    // const [searchParams] = useSearchParams();
 
-    console.log(searchParams);
+    // console.log(searchParams);
     if (isPending) return <Spinner />;
     if (!bookings.length) return <Empty>No bookings can be found.</Empty>;
 

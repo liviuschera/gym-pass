@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { HiXMark } from "react-icons/hi2";
 import { createPortal } from "react-dom";
-import { useEffect } from "react";
-import { useRef } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
 import { cloneElement } from "react";
 

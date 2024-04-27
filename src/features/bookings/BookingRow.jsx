@@ -5,14 +5,10 @@ import { TableRow } from "../../ui/Table";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 import { format, isToday } from "date-fns";
 import DisplayStatus from "./DisplayStatus";
-import {
-    HiEye,
-    HiInformationCircle,
-    HiOutlineInformationCircle,
-    HiPencil,
-} from "react-icons/hi2";
+import { HiArrowUpOnSquare, HiOutlineInformationCircle } from "react-icons/hi2";
 import Button from "../../ui/Button";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Tooltip from "../../ui/Tooltip";
 
 const Activity = styled.div`
     font-size: 1.6rem;
@@ -39,7 +35,6 @@ const Stacked = styled.div`
 function BookingRow({
     booking: {
         id: bookingId,
-        createdAt,
         isGuest,
         isPaid,
         bookedInDateTime,
@@ -93,16 +88,28 @@ function BookingRow({
                 {formatCurrency(regularPrice - discount)}
             </DisplayStatus>
             {/* DISPLAY BOOKING ID */}
-            <Button
-                size="small"
-                variation="info"
-                onClick={() => navigate(`/bookings/${bookingId}`)}
-            >
-                <HiOutlineInformationCircle
-                    size={21}
-                    style={{ margin: "0.1rem" }}
-                />
-            </Button>
+            <Stacked>
+                <Tooltip text={`Details for booking ID: ${bookingId}`}>
+                    <Button
+                        size="small"
+                        variation="secondary"
+                        onClick={() => navigate(`/bookings/${bookingId}`)}
+                    >
+                        <HiOutlineInformationCircle />
+                    </Button>
+                </Tooltip>
+                {bookingStatus === "unconfirmed" && (
+                    <Tooltip text={`Check in for booking ID: ${bookingId}`}>
+                        <Button
+                            size="small"
+                            variation="secondary"
+                            onClick={() => navigate(`/checkin/${bookingId}`)}
+                        >
+                            <HiArrowUpOnSquare />
+                        </Button>
+                    </Tooltip>
+                )}
+            </Stacked>
         </TableRow>
     );
 }
