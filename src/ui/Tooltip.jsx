@@ -3,18 +3,20 @@ import styled, { css } from "styled-components";
 
 const positions = {
     top: css`
-        right: -0%;
-        top: -130%;
+        right: 0%;
+        top: -150%;
     `,
     bottom: css`
-        right: -0%;
-        bottom: -130%;
+        right: 0%;
+        bottom: -150%;
     `,
     left: css`
-        left: 110%;
+        top: 0%;
+        left: -120%;
     `,
     right: css`
-        right: 110%;
+        top: -11%;
+        right: 120%;
     `,
 };
 
@@ -39,16 +41,11 @@ const StyledTooltip = styled.div`
 
     &:hover span {
         visibility: visible;
-        overflow: visible !important;
         opacity: 1;
     }
 `;
 
-StyledTooltip.defaultProps = {
-    position: "right",
-};
-
-export default function Tooltip({ text, position, children }) {
+export default function Tooltip({ text, position = "right", children }) {
     const [hover, setHover] = useState(false);
 
     return (

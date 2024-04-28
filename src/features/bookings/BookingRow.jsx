@@ -9,27 +9,13 @@ import { HiArrowUpOnSquare, HiOutlineInformationCircle } from "react-icons/hi2";
 import Button from "../../ui/Button";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "../../ui/Tooltip";
+import { Stacked } from "../../ui/Stacked";
 
 const Activity = styled.div`
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--color-grey-600);
     /* font-family: "Iosevka", monospace; */
-`;
-
-const Stacked = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-
-    & span:first-child {
-        font-weight: 500;
-    }
-
-    & span:last-child {
-        color: var(--color-grey-500);
-        font-size: 1.2rem;
-    }
 `;
 
 function BookingRow({

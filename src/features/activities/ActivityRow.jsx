@@ -11,6 +11,8 @@ import { TableRow } from "../../ui/Table";
 import { formatCurrency } from "../../utils/helpers";
 import EditActivity from "./EditActivity";
 import DeleteActivity from "./DeleteActivity";
+import Tooltip from "../../ui/Tooltip";
+import { Stacked } from "../../ui/Stacked";
 
 function ActivityRow({ activity }) {
     const {
@@ -56,10 +58,14 @@ function ActivityRow({ activity }) {
             ) : (
                 <span>&mdash;</span>
             )}
-            <div>
-                <EditActivity activityToEdit={activity} isEditForm={true} />
-                <DeleteActivity activityId={activityId} />
-            </div>
+            <Stacked>
+                <Tooltip text="Edit">
+                    <EditActivity activityToEdit={activity} isEditForm={true} />
+                </Tooltip>
+                <Tooltip text="Delete">
+                    <DeleteActivity activityId={activityId} />
+                </Tooltip>
+            </Stacked>
         </TableRow>
     );
 }
