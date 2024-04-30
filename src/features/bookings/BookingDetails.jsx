@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Row from "../../ui/Row";
 import Heading from "../../ui/Heading";
-import Button from "../../ui/Button";
 import DisplayStatus from "./DisplayStatus";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";

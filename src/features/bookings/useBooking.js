@@ -7,7 +7,7 @@ export function useBooking() {
 
     const {
         isPending,
-        data: booking,
+        data: booking = {},
         error,
     } = useQuery({
         queryKey: ["booking", bookingId], // add the bookingId to the query key array to trigger the query
