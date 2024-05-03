@@ -82,9 +82,13 @@ const Price = styled.div`
     margin-top: 2.4rem;
 
     background-color: ${(props) =>
-        props.isPaid ? "var(--color-green-100)" : "var(--color-yellow-100)"};
+        props.$ispaid === "true"
+            ? "var(--color-green-100)"
+            : "var(--color-yellow-100)"};
     color: ${(props) =>
-        props.isPaid ? "var(--color-green-700)" : "var(--color-yellow-700)"};
+        props.$ispaid === "true"
+            ? "var(--color-green-700)"
+            : "var(--color-yellow-700)"};
 
     & p:last-child {
         text-transform: uppercase;
@@ -131,7 +135,7 @@ function BookingDataBox({ booking }) {
         activityId,
         date,
     });
-    const isFree = regularPrice === 0;
+    const isFree = (regularPrice === 0).toString();
     if (isPending) return <Spinner />;
 
     return (
@@ -195,7 +199,7 @@ function BookingDataBox({ booking }) {
                     {isGuest ? "Guest" : "Member"}
                 </DataItem>
 
-                <Price isPaid={isFree ? true : isPaid}>
+                <Price ispaid={isFree ? "true" : isPaid}>
                     <DataItem
                         icon={<HiOutlineCurrencyDollar />}
                         label={`Price: `}
