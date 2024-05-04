@@ -7,6 +7,7 @@ import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
 import ButtonText from "../../ui/ButtonText";
 import BookingDataBox from "./BookingDataBox";
+import DeleteBooking from "./DeleteBooking";
 
 const HeadingGroup = styled.div`
     display: flex;
@@ -34,6 +35,8 @@ function BookingDetails() {
             </Row>
 
             <BookingDataBox booking={booking} />
+
+            <DeleteBooking bookingId={booking.id} />
         </>
     );
 }

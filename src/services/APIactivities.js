@@ -77,4 +77,6 @@ export async function deleteActivity(id) {
         console.error(error);
         throw new Error("Unable to delete the activity");
     }
+
+    return data;
 }

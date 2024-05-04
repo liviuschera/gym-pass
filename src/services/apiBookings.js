@@ -90,3 +90,15 @@ export async function updateBooking(id, obj) {
 
     return data;
 }
+
+export async function deleteBooking(id) {
+    const { data, error } = await supabase
+        .from("bookings")
+        .delete()
+        .eq("id", id);
+    if (error) {
+        console.error(error);
+        throw new Error(`Error deleting booking#${id}: ${error.message}`);
+    }
+    return data;
+}
