@@ -64,8 +64,7 @@ async function createBookings() {
             activityId: allActivityIds.at(booking.activityId - 1),
         };
     });
-
-    console.log(finalBookings);
+    console.log("🚀 ~ finalBookings ~ finalBookings:", finalBookings);
 
     const { error } = await supabase.from("bookings").insert(finalBookings);
     if (error) console.log(error.message);

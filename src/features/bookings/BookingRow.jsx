@@ -5,11 +5,17 @@ import { TableRow } from "../../ui/Table";
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 import { format, isToday } from "date-fns";
 import DisplayStatus from "./DisplayStatus";
-import { HiArrowUpOnSquare, HiOutlineInformationCircle } from "react-icons/hi2";
+import {
+    HiArrowUpOnSquare,
+    HiOutlineInformationCircle,
+    HiOutlineTrash,
+} from "react-icons/hi2";
 import Button from "../../ui/Button";
 import { useNavigate } from "react-router-dom";
 import Tooltip from "../../ui/Tooltip";
 import { Stacked } from "../../ui/Stacked";
+import Row from "../../ui/Row";
+import DeleteBooking from "./DeleteBooking";
 
 const Activity = styled.div`
     font-size: 1.6rem;
@@ -74,8 +80,11 @@ function BookingRow({
                 {formatCurrency(regularPrice - discount)}
             </DisplayStatus>
             {/* DISPLAY BOOKING ID */}
-            <Stacked>
-                <Tooltip text={`Details for booking ID: ${bookingId}`}>
+            <Row>
+                <Tooltip text={`Delete booking #${bookingId}`}>
+                    <DeleteBooking bookingId={bookingId} size="small" />
+                </Tooltip>
+                <Tooltip text={`Details for booking #${bookingId}`}>
                     <Button
                         size="small"
                         variation="secondary"
@@ -85,7 +94,7 @@ function BookingRow({
                     </Button>
                 </Tooltip>
                 {bookingStatus === "unconfirmed" && (
-                    <Tooltip text={`Check in for booking ID: ${bookingId}`}>
+                    <Tooltip text={`Check in for booking #${bookingId}`}>
                         <Button
                             size="small"
                             variation="secondary"
@@ -95,7 +104,7 @@ function BookingRow({
                         </Button>
                     </Tooltip>
                 )}
-            </Stacked>
+            </Row>
         </TableRow>
     );
 }

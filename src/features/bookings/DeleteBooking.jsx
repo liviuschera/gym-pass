@@ -5,20 +5,24 @@ import ConfirmDelete from "../../ui/ConfirmDelete";
 import { useDeleteBooking } from "./useDeleteBooking";
 import { HiTrash } from "react-icons/hi2";
 
-function DeleteBooking({ bookingId }) {
+function DeleteBooking({ bookingId, size, options = {} }) {
     console.log("🚀 ~ DeleteBooking ~ bookingId:", bookingId);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const { isDeleting, deleteBooking } = useDeleteBooking();
     return (
         <div>
             <Button
-                size="small"
+                size={size}
                 variation="danger"
                 onClick={() => {
                     setIsOpenModal((show) => !show);
                 }}
             >
-                Delete booking #${bookingId}
+                {Object.keys(options).length > 0 ? (
+                    `Delete booking #${bookingId}`
+                ) : (
+                    <HiTrash />
+                )}
             </Button>
             {isOpenModal && (
                 <Modal onClose={() => setIsOpenModal(false)}>
@@ -26,7 +30,7 @@ function DeleteBooking({ bookingId }) {
                         onClose={() => setIsOpenModal(false)}
                         disabled={isDeleting}
                         resourceName={"booking"}
-                        onConfirm={() => deleteBooking(bookingId)}
+                        onConfirm={() => deleteBooking(bookingId, options)}
                     />
                 </Modal>
             )}

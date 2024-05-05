@@ -8,6 +8,7 @@ import Spinner from "../../ui/Spinner";
 import ButtonText from "../../ui/ButtonText";
 import BookingDataBox from "./BookingDataBox";
 import DeleteBooking from "./DeleteBooking";
+import { useNavigate } from "react-router-dom";
 
 const HeadingGroup = styled.div`
     display: flex;
@@ -16,6 +17,7 @@ const HeadingGroup = styled.div`
 `;
 function BookingDetails() {
     const moveBack = useMoveBack();
+    const navigate = useNavigate();
     const { booking, isPending } = useBooking();
     // const { id: bookingId, bookingStatus } = booking;
     // console.log(booking);
@@ -36,7 +38,11 @@ function BookingDetails() {
 
             <BookingDataBox booking={booking} />
 
-            <DeleteBooking bookingId={booking.id} />
+            <DeleteBooking
+                bookingId={booking.id}
+                size="medium"
+                options={{ onSettled: () => navigate(-1) }}
+            />
         </>
     );
 }
