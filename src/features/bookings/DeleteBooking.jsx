@@ -6,7 +6,6 @@ import { useDeleteBooking } from "./useDeleteBooking";
 import { HiTrash } from "react-icons/hi2";
 
 function DeleteBooking({ bookingId, size, options = {} }) {
-    console.log("🚀 ~ DeleteBooking ~ bookingId:", bookingId);
     const [isOpenModal, setIsOpenModal] = useState(false);
     const { isDeleting, deleteBooking } = useDeleteBooking();
     return (
