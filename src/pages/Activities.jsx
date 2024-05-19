@@ -8,7 +8,7 @@ function Activities() {
     return (
         <>
             <Row>
-                <Heading>All activities</Heading>
+                <Heading as="h1">All activities</Heading>
                 <ActivityTableOperations />
             </Row>
             <ActivityTable />
