@@ -16,7 +16,16 @@ function LoginForm() {
     function handleSubmit(event) {
         event.preventDefault();
         if (!email || !password) return;
-        login({ email, password });
+        login(
+            { email, password },
+            {
+                onSettled: () => {
+                    // on successful login, reset the form
+                    setEmail("");
+                    setPassword("");
+                },
+            }
+        );
     }
 
     if (isLoading) return <Spinner />;

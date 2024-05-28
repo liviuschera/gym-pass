@@ -4,7 +4,6 @@ import {
     HiOutlineChatBubbleBottomCenterText,
     HiOutlineCheckCircle,
     HiOutlineCurrencyDollar,
-    HiOutlinePhone,
 } from "react-icons/hi2";
 
 import DataItem from "../../ui/DataItem";
@@ -13,9 +12,6 @@ import { formatDistanceFromNow, formatCurrency } from "../../utils/helpers";
 import { PiPersonSimpleRunDuotone } from "react-icons/pi";
 import { useBookingsByActivityAndDate } from "./useBookingsByActivityAndDate";
 import Spinner from "../../ui/Spinner";
-import { LiaBirthdayCakeSolid } from "react-icons/lia";
-import { HiOutlineMail } from "react-icons/hi";
-import { MdOutlineEmail } from "react-icons/md";
 
 const StyledBookingDataBox = styled.section`
     /* Box */

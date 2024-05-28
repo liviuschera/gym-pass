@@ -29,7 +29,7 @@ function ActivityRow({ activity }) {
     function trimDescription() {
         const sliceLength = 65;
         if (description.length > sliceLength) {
-            return `${description.slice(0, sliceLength)}`;
+            return `${description.slice(0, sliceLength)}...`;
         }
         return description;
     }
