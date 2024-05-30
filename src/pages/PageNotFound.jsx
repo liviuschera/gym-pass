@@ -37,7 +37,7 @@ function PageNotFound() {
                 <Heading as="h1">
                     The page you are looking for could not be found.
                 </Heading>
-                <Button variation="info" onClick={moveBack} size="large">
+                <Button $variation="info" onClick={moveBack} size="large">
                     &larr; Go back
                 </Button>
             </Box>

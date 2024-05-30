@@ -87,7 +87,7 @@ function BookingRow({
                 <Tooltip text={`Details for booking #${bookingId}`}>
                     <Button
                         size="small"
-                        variation="secondary"
+                        $variation="secondary"
                         onClick={() => navigate(`/bookings/${bookingId}`)}
                     >
                         <HiOutlineInformationCircle />
@@ -97,7 +97,7 @@ function BookingRow({
                     <Tooltip text={`Check in for booking #${bookingId}`}>
                         <Button
                             size="small"
-                            variation="secondary"
+                            $variation="secondary"
                             onClick={() => navigate(`/checkin/${bookingId}`)}
                         >
                             <HiArrowUpOnSquare />

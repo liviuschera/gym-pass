@@ -12,7 +12,7 @@ function DeleteBooking({ bookingId, size, options = {} }) {
         <div>
             <Button
                 size={size}
-                variation="danger"
+                $variation="danger"
                 onClick={() => {
                     setIsOpenModal((show) => !show);
                 }}

@@ -14,7 +14,10 @@ function ProtectedRoute({ children }) {
     // 3 - while loading show the spinner
     if (isPending) return <Spinner />;
     // 4 - if yes, render app
-    if (isAuthenticated) return children;
+    if (isAuthenticated) {
+        navigate("/");
+        return children;
+    }
 }
 
 export default ProtectedRoute;

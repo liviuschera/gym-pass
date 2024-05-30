@@ -7,5 +7,7 @@ export function useUser() {
         queryFn: getCurrentUser,
     });
 
+    console.log("🚀 ~ file: useUser.js:useUser ~ user", user);
+
     return { user, isPending, isAuthenticated: user?.role === "authenticated" };
 }

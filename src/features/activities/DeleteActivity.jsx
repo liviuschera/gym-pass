@@ -12,7 +12,7 @@ function DeleteActivity({ activityId }) {
         <div>
             <Button
                 size="small"
-                variation="danger"
+                $variation="danger"
                 onClick={() => {
                     setIsOpenModal((show) => !show);
                 }}

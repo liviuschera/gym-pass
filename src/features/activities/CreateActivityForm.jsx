@@ -188,7 +188,7 @@ function CreateActivityForm({ activityToEdit, isEditForm, onCloseModal }) {
 
             <FormRow>
                 <Button
-                    variation="secondary"
+                    $variation="secondary"
                     type="reset"
                     onClick={() => onCloseModal?.()} //in order to reuse this form we conditionally call the function with optional chaining operator
                 >
