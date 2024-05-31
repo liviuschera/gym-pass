@@ -11,7 +11,7 @@ import { useLogin } from "./useLogin";
 function LoginForm() {
     const [email, setEmail] = useState("liviu@email.com");
     const [password, setPassword] = useState("Pass1234");
-    const { login, isLoading } = useLogin();
+    const { login, isPending } = useLogin();
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -28,7 +28,7 @@ function LoginForm() {
         );
     }
 
-    if (isLoading) return <Spinner />;
+    if (isPending) return <Spinner />;
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -40,7 +40,7 @@ function LoginForm() {
                     autoComplete="username"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    disabled={isLoading}
+                    disabled={isPending}
                 />
             </FormRowVertical>
             <FormRowVertical label="Password">
@@ -50,12 +50,12 @@ function LoginForm() {
                     autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    disabled={isLoading}
+                    disabled={isPending}
                 />
             </FormRowVertical>
             <FormRowVertical>
-                <Button size="large" disabled={isLoading}>
-                    {!isLoading ? "Login" : <SpinnerMini />}
+                <Button size="large" disabled={isPending}>
+                    {!isPending ? "Login" : <SpinnerMini />}
                 </Button>
             </FormRowVertical>
         </Form>

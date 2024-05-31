@@ -36,7 +36,7 @@ const StyledTooltip = styled.div`
         z-index: 1;
         opacity: 0;
         transition: opacity 0.3s;
-        ${(props) => positions[props.position]};
+        ${(props) => positions[props.$position]};
     }
 
     &:hover span {
@@ -45,12 +45,12 @@ const StyledTooltip = styled.div`
     }
 `;
 
-export default function Tooltip({ text, position = "right", children }) {
+export default function Tooltip({ text, $position = "right", children }) {
     const [hover, setHover] = useState(false);
 
     return (
         <StyledTooltip
-            position={position}
+            $position={$position}
             onMouseEnter={() => setHover((hover) => !hover)}
             onMouseLeave={() => setHover((hover) => !hover)}
         >

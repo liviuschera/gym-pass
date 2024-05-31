@@ -25,7 +25,13 @@ export async function getCurrentUser() {
         throw new Error("Error getting user: " + error.message);
     }
 
-    console.log("🚀 ~ getUser ~ data:", data);
-
     return data?.user;
+}
+
+export async function logout() {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+        console.error(error);
+        throw new Error("Error signing out: " + error.message);
+    }
 }

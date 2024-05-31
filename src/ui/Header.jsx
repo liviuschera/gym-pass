@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Logout from "../features/authentication/Logout";
+import Tooltip from "./Tooltip";
 
 const StyledHeader = styled.header`
     background-color: var(--color-grey-0);
@@ -7,7 +9,13 @@ const StyledHeader = styled.header`
 `;
 
 function Header() {
-    return <StyledHeader>StyledHeader</StyledHeader>;
+    return (
+        <StyledHeader>
+            <Tooltip text="Logout">
+                <Logout />
+            </Tooltip>
+        </StyledHeader>
+    );
 }
 
 export default Header;
