@@ -65,12 +65,6 @@ function MainNav() {
                     </StyledNavLink>
                 </li>
                 <li>
-                    <StyledNavLink to="/members">
-                        <HiOutlineUsers />
-                        <span>Members</span>
-                    </StyledNavLink>
-                </li>
-                <li>
                     <StyledNavLink to="/bookings">
                         <HiOutlineCalendarDays /> <span>Bookings</span>
                     </StyledNavLink>
@@ -79,6 +73,12 @@ function MainNav() {
                     <StyledNavLink to="/activities">
                         <PiPersonSimpleRunDuotone />
                         <span>Activities</span>
+                    </StyledNavLink>
+                </li>
+                <li>
+                    <StyledNavLink to="/staff">
+                        <HiOutlineUsers />
+                        <span>Staff</span>
                     </StyledNavLink>
                 </li>
                 <li>

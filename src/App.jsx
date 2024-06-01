@@ -8,7 +8,7 @@ import Bookings from "./pages/Bookings";
 import Activities from "./pages/Activities";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Members from "./pages/Members";
+import Staff from "./pages/Staff";
 import { Navigate } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Settings from "./pages/Settings";
@@ -54,7 +54,7 @@ function App() {
                         />
                         <Route path="/activities" element={<Activities />} />
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/members" element={<Members />} />
+                        <Route path="/staff" element={<Staff />} />
                         <Route path="/settings" element={<Settings />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
