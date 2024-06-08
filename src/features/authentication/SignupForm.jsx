@@ -1,97 +1,135 @@
-import { useForm } from "react-hook-form";
+import { useReducer, useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-import { useSignup } from "./useSignup";
+import { isFormValid } from "./isFormValid";
 
-// Email regex: /\S+@\S+\.\S+/
+const initialState = {
+    fullName: "",
+    email: "",
+    password: "",
+    passwordConfirm: "",
+};
 
-function SignupForm() {
-  const { signup, isLoading } = useSignup();
-  const { register, formState, getValues, handleSubmit, reset } = useForm();
-  const { errors } = formState;
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "setFullName":
+            return { ...state, fullName: action.payload };
+        case "setEmail":
+            return { ...state, email: action.payload };
+        case "setPassword":
+            return { ...state, password: action.payload };
+        case "setPasswordConfirm":
+            return { ...state, passwordConfirm: action.payload };
+        case "reset":
+            return initialState;
+        default:
+            throw new Error("Unknown action type");
+    }
+};
 
-  function onSubmit({ fullName, email, password }) {
-    signup(
-      { fullName, email, password },
-      {
-        onSettled: () => reset(),
-      }
+function SignUpForm(newStaffMember) {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const [errors, setErrors] = useState({});
+    const { fullName, email, password, passwordConfirm } = state;
+
+    console.log("🚀 ~ SignUpForm ~ state:", state);
+    function handleSubmit(e) {
+        e.preventDefault();
+        // if (!isFormValid(state, setErrors)) return;
+        isFormValid(state, setErrors);
+        console.log("🚀 ~ SignUpForm ~ errors:", errors);
+        // if (Object.keys(errors).length === 0) {
+        //     // isFormValid(state, setErrors) && dispatch({ type: "reset" });
+        //     return;
+        // }
+    }
+
+    return (
+        <Form onSubmit={handleSubmit}>
+            <FormRow label="Full name" error={errors?.fullName}>
+                <Input
+                    type="text"
+                    id="fullName"
+                    // disabled={isPending}
+                    required
+                    value={fullName}
+                    onChange={(e) =>
+                        dispatch({
+                            type: "setFullName",
+                            payload: e.target.value,
+                        })
+                    }
+                />
+            </FormRow>
+
+            <FormRow label="Email address" error={errors?.email}>
+                <Input
+                    type="email"
+                    id="email"
+                    // disabled={isPending}
+                    required
+                    value={email}
+                    onChange={(e) =>
+                        dispatch({ type: "setEmail", payload: e.target.value })
+                    }
+                />
+            </FormRow>
+
+            <FormRow
+                label="Password (min 8 characters)"
+                error={errors?.password}
+            >
+                <Input
+                    type="password"
+                    id="password"
+                    // disabled={isPending}
+                    required
+                    value={password}
+                    onChange={(e) =>
+                        dispatch({
+                            type: "setPassword",
+                            payload: e.target.value,
+                        })
+                    }
+                />
+            </FormRow>
+
+            <FormRow label="Repeat password" error={errors?.passwordConfirm}>
+                <Input
+                    type="password"
+                    id="passwordConfirm"
+                    // disabled={isPending}
+                    required
+                    value={passwordConfirm}
+                    onChange={(e) =>
+                        dispatch({
+                            type: "setPasswordConfirm",
+                            payload: e.target.value,
+                        })
+                    }
+                />
+            </FormRow>
+
+            <FormRow>
+                {/* type is an HTML attribute! */}
+                <Button
+                    variation="secondary"
+                    type="reset"
+                    // disabled={isPending}
+                    // onClick={reset}
+                >
+                    Cancel
+                </Button>
+                <Button
+                // disabled={isPending}
+                >
+                    Create new user
+                </Button>
+            </FormRow>
+        </Form>
     );
-  }
-
-  return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label="Full name" error={errors?.fullName?.message}>
-        <Input
-          type="text"
-          id="fullName"
-          disabled={isLoading}
-          {...register("fullName", { required: "This field is required" })}
-        />
-      </FormRow>
-
-      <FormRow label="Email address" error={errors?.email?.message}>
-        <Input
-          type="email"
-          id="email"
-          disabled={isLoading}
-          {...register("email", {
-            required: "This field is required",
-            pattern: {
-              value: /\S+@\S+\.\S+/,
-              message: "Please provide a valid email address",
-            },
-          })}
-        />
-      </FormRow>
-
-      <FormRow
-        label="Password (min 8 characters)"
-        error={errors?.password?.message}
-      >
-        <Input
-          type="password"
-          id="password"
-          disabled={isLoading}
-          {...register("password", {
-            required: "This field is required",
-            minLength: {
-              value: 8,
-              message: "Password needs a minimum of 8 characters",
-            },
-          })}
-        />
-      </FormRow>
-
-      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
-        <Input
-          type="password"
-          id="passwordConfirm"
-          disabled={isLoading}
-          {...register("passwordConfirm", {
-            required: "This field is required",
-            validate: (value) =>
-              value === getValues().password || "Passwords need to match",
-          })}
-        />
-      </FormRow>
-
-      <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button
-          variation="secondary"
-          type="reset"
-          disabled={isLoading}
-          onClick={reset}
-        >
-          Cancel
-        </Button>
-        <Button disabled={isLoading}>Create new user</Button>
-      </FormRow>
-    </Form>
-  );
 }
 
-export default SignupForm;
+export default SignUpForm;

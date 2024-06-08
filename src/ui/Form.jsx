@@ -20,7 +20,7 @@ const Form = styled.form`
 
   overflow: hidden;
     font-size: 1.4rem;
-    font-family: "Rubik", monospace;
+    font-family: "Rubik", sans-serif;
 `;
 
 Form.defaultProps = {
