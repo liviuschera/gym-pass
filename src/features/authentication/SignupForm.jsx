@@ -4,6 +4,7 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 import { isFormValid } from "./isFormValid";
+import { useSignup } from "./useSignup";
 
 const initialState = {
     fullName: "",
@@ -32,13 +33,20 @@ const reducer = (state, action) => {
 function SignUpForm(newStaffMember) {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [errors, setErrors] = useState({});
+    const { signup, isLoading } = useSignup();
     const { fullName, email, password, passwordConfirm } = state;
 
     console.log("🚀 ~ SignUpForm ~ state:", state);
     function handleSubmit(e) {
         e.preventDefault();
-        // if (!isFormValid(state, setErrors)) return;
-        isFormValid(state, setErrors);
+        if (!isFormValid(state, setErrors)) return;
+        signup(
+            { fullName, email, password },
+            {
+                onSettled: dispatch({ type: "reset" }),
+            }
+        );
+        // isFormValid(state, setErrors);
         console.log("🚀 ~ SignUpForm ~ errors:", errors);
         // if (Object.keys(errors).length === 0) {
         //     // isFormValid(state, setErrors) && dispatch({ type: "reset" });
@@ -115,7 +123,7 @@ function SignUpForm(newStaffMember) {
             <FormRow>
                 {/* type is an HTML attribute! */}
                 <Button
-                    variation="secondary"
+                    $variation="secondary"
                     type="reset"
                     // disabled={isPending}
                     // onClick={reset}

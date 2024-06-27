@@ -56,42 +56,6 @@ function ActivityTable() {
         });
 
         return sortActivities;
-
-        // switch (sortBy) {
-        //     case "name-asc":
-        //         return filteredActivities.sort((a, b) =>
-        //             a.name.localeCompare(b.name)
-        //         );
-        //     case "name-desc":
-        //         return filteredActivities.sort((a, b) =>
-        //             b.name.localeCompare(a.name)
-        //         );
-        //     case "type-asc":
-        //         return filteredActivities.sort((a, b) =>
-        //             a.type.localeCompare(b.type)
-        //         );
-        //     case "type-desc":
-        //         return filteredActivities.sort((a, b) =>
-        //             b.type.localeCompare(a.type)
-        //         );
-        //     case "regularPrice-asc":
-        //         return filteredActivities.sort(
-        //             (a, b) => a.regularPrice - b.regularPrice
-        //         );
-        //     case "regularPrice-desc":
-        //         return filteredActivities.sort(
-        //             (a, b) => b.regularPrice - a.regularPrice
-        //         );
-        //     case "maxCapacity-asc":
-        //         return filteredActivities.sort(
-        //             (a, b) => a.maxCapacity - b.maxCapacity
-        //         );
-        //     case "maxCapacity-desc":
-        //         return filteredActivities.sort(
-        //             (a, b) => b.maxCapacity - a.maxCapacity
-        //         );
-        // }
-        // return filteredActivities;
     }
 
     const sortedActivities = getSortedActivity(
