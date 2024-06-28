@@ -133,6 +133,10 @@ ul {
   list-style: none;
 }
 
+li{
+  list-style: none;
+}
+
 p,
 h1,
 h2,
