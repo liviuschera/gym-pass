@@ -1,10 +1,10 @@
 import Heading from "../ui/Heading";
-import SignUpForm from "../features/authentication/SignUpForm.jsx";
+import SignupForm from "../features/authentication/SignupForm.jsx";
 function Staff() {
     return (
         <>
             <Heading as="h1">Add new staff member</Heading>
-            <SignUpForm />
+            <SignupForm />
         </>
     );
 }
