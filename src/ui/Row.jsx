@@ -1,9 +1,21 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Row = styled.div`
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+
+    ${(props) =>
+        props.type === null &&
+        css`
+            justify-content: space-between;
+            align-items: center;
+        `}
+
+    ${(props) =>
+        props.type === "vertical" &&
+        css`
+            flex-direction: column;
+            align-items: center;
+            gap: 1.6rem;
+        `}
 `;
 export default Row;

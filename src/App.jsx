@@ -56,9 +56,9 @@ function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/staff" element={<Staff />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/account" element={<Account />} />
                     </Route>
                     <Route path="/login" element={<Login />} />
-                    <Route path="/account" element={<Account />} />
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
             </BrowserRouter>
