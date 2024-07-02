@@ -1,5 +1,5 @@
 import Heading from "../ui/Heading";
-import SignUpForm from "../features/authentication/SignUpForm";
+import SignUpForm from "../features/authentication/SignUpForm.jsx";
 function Staff() {
     return (
         <>
