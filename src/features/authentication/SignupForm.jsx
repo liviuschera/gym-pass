@@ -30,13 +30,13 @@ const reducer = (state, action) => {
     }
 };
 
-function SignUpForm(newStaffMember) {
+function SignupForm() {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [errors, setErrors] = useState({});
     const { signup, isLoading } = useSignup();
     const { fullName, email, password, passwordConfirm } = state;
 
-    console.log("🚀 ~ SignUpForm ~ state:", state);
+    console.log("🚀 ~ SignupForm ~ state:", state);
     function handleSubmit(e) {
         e.preventDefault();
         if (!isFormValid(state, setErrors)) return;
@@ -47,7 +47,7 @@ function SignUpForm(newStaffMember) {
             }
         );
         // isFormValid(state, setErrors);
-        console.log("🚀 ~ SignUpForm ~ errors:", errors);
+        console.log("🚀 ~ SignupForm ~ errors:", errors);
         // if (Object.keys(errors).length === 0) {
         //     // isFormValid(state, setErrors) && dispatch({ type: "reset" });
         //     return;
@@ -140,4 +140,4 @@ function SignUpForm(newStaffMember) {
     );
 }
 
-export default SignUpForm;
+export default SignupForm;
