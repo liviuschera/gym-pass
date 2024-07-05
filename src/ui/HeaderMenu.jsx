@@ -4,6 +4,7 @@ import { HiOutlineUser } from "react-icons/hi";
 import Logout from "../features/authentication/Logout";
 import Tooltip from "./Tooltip";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "./DarkModeToggle";
 
 const StyledMenuHeader = styled.div`
     display: flex;
@@ -26,6 +27,9 @@ function HeaderMenu() {
                 <Tooltip text="Logout">
                     <Logout />
                 </Tooltip>
+            </li>
+            <li>
+                <DarkModeToggle />
             </li>
         </StyledMenuHeader>
     );

@@ -25,10 +25,7 @@ function UpdateUserDataForm() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(
-            "🚀 ~ UpdateUserDataForm ~ handleSubmit ~ e.target.files[0]:",
-            e.target.files
-        );
+
         if (!fullName) return;
         updateUser(
             { fullName, avatar },

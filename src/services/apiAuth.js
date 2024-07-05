@@ -1,4 +1,5 @@
 import supabase from "./supabase";
+import { supabaseUrl } from "./supabase";
 
 export async function login({ email, password }) {
     let { data, error } = await supabase.auth.signInWithPassword({
@@ -61,6 +62,7 @@ export async function updateCurrentUser({ password, fullName, avatar }) {
     if (fullName) updateData = { data: { fullName } };
 
     const { data, error } = await supabase.auth.updateUser(updateData);
+    console.log("🚀 ~ updateCurrentUser ~ data:", data);
 
     if (error) throw new Error(error.message);
     if (!avatar) return data;
